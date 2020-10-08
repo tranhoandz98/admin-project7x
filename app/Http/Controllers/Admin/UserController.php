@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(3);
         return view('admin.user.index', compact('users'));
     }
 
@@ -169,7 +169,7 @@ class UserController extends Controller
     public function changeStatus(Request $request, $id)
     {
         //
-        dd($request->all());
+        // dd($request->all());
         $user = User::find($id);
         $user->update($request->all());
         return redirect()->route('user.index')->with('success', 'Cập nhật thành công');
