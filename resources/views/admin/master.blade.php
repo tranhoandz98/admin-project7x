@@ -18,7 +18,22 @@
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="{{ url('public') }}/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="{{ url('public') }}/assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('public') }}/assets/css/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('public') }}/assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('public') }}/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
+    <script src="{{ url('public') }}/plugins/sweetalerts/promise-polyfill.js"></script>
+    <link href="{{ url('public') }}/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('public') }}/plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('public') }}/assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('public') }}/assets/css/style.css" rel="stylesheet" type="text/css" />
+
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+     <!--  BEGIN CUSTOM STYLE FILE  -->
+     <link rel="stylesheet" type="text/css" href="{{ url('public') }}/assets/css/elements/alert.css">
+     <style>
+         .btn-light { border-color: transparent; }
+     </style>
+     <!--  END CUSTOM STYLE FILE  -->
 
 </head>
 <body>
@@ -281,6 +296,8 @@
     <script src="{{ url('public') }}/bootstrap/js/bootstrap.min.js"></script>
     <script src="{{ url('public') }}/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="{{ url('public') }}/assets/js/app.js"></script>
+    <script src="{{ url('public') }}/plugins/highlight/highlight.pack.js"></script>
+    <script src="{{ url('public') }}/assets/js/custom.js"></script>
     <script>
         $(document).ready(function() {
             App.init();
@@ -293,6 +310,12 @@
     <script src="{{ url('public') }}/plugins/apex/apexcharts.min.js"></script>
     <script src="{{ url('public') }}/assets/js/dashboard/dash_2.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+      <!-- BEGIN THEME GLOBAL STYLE -->
+      <script src="{{ url('public') }}/assets/js/scrollspyNav.js"></script>
+      <script src="{{ url('public') }}/plugins/sweetalerts/sweetalert2.min.js"></script>
+      <script src="{{ url('public') }}/plugins/sweetalerts/custom-sweetalert.js"></script>
+      <!-- END THEME GLOBAL STYLE -->
+      <script src="{{ url('public') }}/assets/js/index.js"></script>
 
 </body>
 </html>
