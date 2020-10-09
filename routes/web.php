@@ -23,8 +23,9 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => 'checkAdmin'], function () {
     Route::get('/', 'HomeController@index')->name('admin');
     Route::get('/logout', 'HomeController@logout')->name('logout');
+    Route::get('user/search','UserController@search')->name('user.search');
     Route::resource('user', 'UserController');
-    Route::post('user/changeStatus/{id}','UserController@changeStatus')->name('user.changeStatus');
+    Route::get('user/changeStatus/{id}','UserController@changeStatus')->name('user.changeStatus');
 });
 Route::get('/admin/login', 'Admin\HomeController@login')->name('login');
 Route::post('/admin/login', 'Admin\HomeController@postLogin');

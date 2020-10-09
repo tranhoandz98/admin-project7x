@@ -59,4 +59,7 @@ class User extends Authenticatable
     //         [Role::whereName($role)->firstOrFail()->id]
     //     );
     // }
+    public function user_role(){
+        return $this->hasOne(UserRole::class, 'user_id', 'id');
+    }
 }
