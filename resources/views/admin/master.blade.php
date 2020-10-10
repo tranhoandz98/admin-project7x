@@ -316,6 +316,13 @@
       <script src="{{ url('public') }}/plugins/sweetalerts/custom-sweetalert.js"></script>
       <!-- END THEME GLOBAL STYLE -->
       <script src="{{ url('public') }}/assets/js/index.js"></script>
+      {{-- submit form get limit page --}}
+      <script>
+          $('#limitPage').change(function (e) {
+            //   e.preventDefault();
+              $('#searchSubmit').click();
+          });
+      </script>
 
 </body>
 </html>

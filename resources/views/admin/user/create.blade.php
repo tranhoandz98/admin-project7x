@@ -60,6 +60,9 @@
                                 <label for="phone" class="text-dark">Phone </label>
                                 <input type="number" class="form-control" name="phone" id="phone" aria-describedby="helpId"
                                     placeholder="Nhập số điện thoại" >
+                                    @error('phone')
+                                    <span class="text-red">{{ $message }}</span>
+                                    @enderror
                             </div>
                         </div>
                         <div class="col">

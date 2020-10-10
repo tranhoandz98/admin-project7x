@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -18,13 +20,52 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function index(Request $request)
+    // {
+    //     $users = User::orderBy('created_at','desc')->paginate(5);
+    //     $roles = Role::all();
+    //     return view('admin.user.index', compact('users','roles'));
+    // }
     public function index(Request $request)
     {
-        $users = User::orderBy('created_at','desc')->paginate(5);
+        $s_limit      = $request->limit ?? 1;
+        $s_fullname   = $request->display_name;
+        $s_role_user  = $request->role_user;
+        $s_type_user  = $request->type_user;
+        $s_created_at = $request->created_at;
+        // dd($s_limit, $s_fullname, $s_role_user, $s_type_user, $s_created_at);
         $roles = Role::all();
-        return view('admin.user.index', compact('users','roles'));
-    }
+        // DB::enableQueryLog();
+        $users = User::
+        where(function ($query) use ($s_fullname) {
+                if ($s_fullname) {
+                    $query->where('display_name', 'like', '%' . $s_fullname . '%');
+                }
+            })
+            ->where(function ($query) use ($s_type_user) {
+                if ($s_type_user) {
+                    $query->where('type_user', $s_type_user);
+                }
+            })
+            ->where(function ($query) use ($s_created_at) {
+                if ($s_created_at) {
+                    $query->whereDate('created_at', '=', $s_created_at);
+                }
+            })
+            ->whereHas('roles', function ($q) use ($s_role_user) {
+                if ($s_role_user) {
+                    $q->where('id', $s_role_user);
+                }
+            })
+            ->
+            orderBy('created_at', 'desc')->paginate($s_limit);
+        // and then you can get query log
+        // dd(DB::getQueryLog());
 
+        return view('admin.user.index', compact('users', 'roles', 's_limit','s_fullname',
+        's_role_user', 's_type_user', 's_created_at'));
+        //
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -43,30 +84,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         //
         // dd($request->all());
-        $request->validate([
-            'name' => 'required',
-            'code' => 'required',
-            'email' => 'required|unique:users',
-            'display_name' => 'required',
-            'password' => 'required',
-            're_password' => 'required',
-            'type' => 'numeric',
-            'role_id' => 'numeric',
-        ], [
-            'name.require' => 'Tên không được bỏ trống',
-            'code.require' => 'Code không được bỏ trống',
-            'email.require' => 'Email không được bỏ trống',
-            'email.unique' => 'Email đã tồn tại',
-            'display_name.require' => 'Display name không được bỏ trống',
-            'password.require' => 'Mật khẩu không được bỏ trống',
-            're_password.require' => 'Mật khẩu không được bỏ trống',
-            'type.numeric' => 'Loại user không được bỏ trống',
-            'role_id.numeric' => 'Quyền user không được bỏ trống',
-        ]);
+        $validated = $request->validated();
+        // dd($validated);
         $role = Role::findOrFail($request->role_id);
         $user = User::create([
             'name' => $request->name,
@@ -116,27 +139,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         //
-        $request->validate([
-            'name' => 'required',
-            'code' => 'required',
-            'email' => ['required', Rule::unique('users')->ignore($id)],
-            'phone' => [Rule::unique('users')->ignore($id)],
-            'display_name' => 'required',
-            'type' => 'numeric',
-            'role_id' => 'numeric',
-        ], [
-            'name.require' => 'Tên không được bỏ trống',
-            'code.require' => 'Code không được bỏ trống',
-            'email.require' => 'Email không được bỏ trống',
-            'email.unique' => 'Email đã tồn tại',
-            'phone.unique' => 'Số điện thoại đã tồn tại',
-            'display_name.require' => 'Display name không được bỏ trống',
-            'type.numeric' => 'Loại user không được bỏ trống',
-            'role_id.numeric' => 'Quyền user không được bỏ trống',
-        ]);
+        $request->validated();
         $role = Role::findOrFail($request->role_id);
         $user = User::find($id);
         // delete user role old
@@ -174,51 +180,15 @@ class UserController extends Controller
         //
         // dd($request->all());
         $user = User::find($id);
-        if ($user->status ==1){
+        if ($user->status == 1) {
             $user->update([
                 'status' => 2
             ]);
-        }
-        else{
+        } else {
             $user->update([
                 'status' => 1
             ]);
         }
         return redirect()->route('user.index')->with('success', 'Cập nhật thành công');
-    }
-    public function search(Request $request){
-        $s_limit      = $request->limit ?? 5;
-        $s_fullname   = $request->display_name;
-        $s_role_user  = $request->role_user;
-        $s_type_user  = $request->type_user;
-        $s_created_at = $request->created_at;
-        // dd($s_limit, $s_fullname, $s_role_user,$s_type_user, $s_created_at);
-        $roles = Role::all();
-        // DB::enableQueryLog();
-        $users = User::
-        where(function ($query) use ($s_fullname) {
-                if($s_fullname){
-                 $query->where('display_name','like', '%'.$s_fullname.'%');
-                }
-            })
-            ->where(function ($query) use ($s_type_user) {
-                if($s_type_user){
-                 $query->where('type_user',$s_type_user);
-                }
-            })
-            ->where(function ($query) use ($s_created_at) {
-                if($s_created_at){
-                 $query->whereDate('created_at', '=', $s_created_at);
-                }
-            })
-        ->whereHas('roles', function($q) use($s_role_user){
-            if($s_role_user){
-                $q->where('id',$s_role_user);
-               }
-        })
-        ->orderBy('created_at','desc')->paginate($s_limit);
-        // and then you can get query log
-        // dd(DB::getQueryLog());
-        return view('admin.user.search', compact('users','roles','s_limit','s_fullname','s_role_user','s_type_user','s_created_at' ));
     }
 }

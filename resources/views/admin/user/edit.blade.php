@@ -60,8 +60,11 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="phone" class="text-dark">Phone </label>
-                                <input type="tel" class="form-control" name="phone" id="phone"
+                                <input type="number" class="form-control" name="phone" id="phone"
                                     aria-describedby="helpId" placeholder="" value="{{ $user->phone }}">
+                                    @error('phone')
+                                    <span class="text-red">{{ $message }}</span>
+                                    @enderror
                             </div>
                         </div>
                         <div class="col">
