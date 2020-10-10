@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends('layouts.master')
 @section('title', 'Cập nhật user')
 @section('title-nav', 'Update User')
 @section('main')
@@ -109,6 +109,27 @@
                                 @error('role_id')
                                 <span class="text-red">{{ $message }}</span>
                                 @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="province_id" class="text-dark">Tỉnh <span class="text-red">*</span></label>
+                                <select class="form-control" name="province_id" id="province_id">
+                                    <option value="">--Tỉnh--</option>
+                                    @foreach ($provinces as $item)
+                                        <option value="{{ $item->code }}">{{ $item->fullname }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="district_id" class="text-dark">Huyện <span class="text-red">*</span></label>
+                                <select class="form-control" name="district_id" id="district_id">
+                                    <option value="">--Huyện--</option>
+                                </select>
                             </div>
                         </div>
                     </div>

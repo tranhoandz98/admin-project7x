@@ -10,11 +10,11 @@ class HomeController extends Controller
 {
     //
     public function index(){
-        return view('admin.index');
+        return view('page.admin.index');
     }
     public function login(){
 
-        return view('admin.login');
+        return view('page.admin.index');
     }
     public function postLogin(Request $request){
         // dd($request->all());

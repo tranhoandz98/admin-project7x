@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\District;
+use App\Models\Province;
 
 class UserController extends Controller
 {
@@ -36,12 +38,11 @@ class UserController extends Controller
         // dd($s_limit, $s_fullname, $s_role_user, $s_type_user, $s_created_at);
         $roles = Role::all();
         // DB::enableQueryLog();
-        $users = User::
-        where(function ($query) use ($s_fullname) {
-                if ($s_fullname) {
-                    $query->where('display_name', 'like', '%' . $s_fullname . '%');
-                }
-            })
+        $users = User::where(function ($query) use ($s_fullname) {
+            if ($s_fullname) {
+                $query->where('display_name', 'like', '%' . $s_fullname . '%');
+            }
+        })
             ->where(function ($query) use ($s_type_user) {
                 if ($s_type_user) {
                     $query->where('type_user', $s_type_user);
@@ -57,13 +58,18 @@ class UserController extends Controller
                     $q->where('id', $s_role_user);
                 }
             })
-            ->
-            orderBy('created_at', 'desc')->paginate($s_limit);
+            ->orderBy('created_at', 'desc')->paginate($s_limit);
         // and then you can get query log
         // dd(DB::getQueryLog());
-
-        return view('admin.user.index', compact('users', 'roles', 's_limit','s_fullname',
-        's_role_user', 's_type_user', 's_created_at'));
+        return view('page.admin.user.index', compact(
+            'users',
+            'roles',
+            's_limit',
+            's_fullname',
+            's_role_user',
+            's_type_user',
+            's_created_at'
+        ));
         //
     }
     /**
@@ -74,8 +80,10 @@ class UserController extends Controller
     public function create()
     {
         //
+
         $roles = Role::all();
-        return view('admin.user.create', compact('roles'));
+        $provinces = Province::all();
+        return view('page.admin.user.create', compact('roles', 'provinces'));
     }
 
     /**
@@ -105,18 +113,6 @@ class UserController extends Controller
         $user->roles()->attach($role);
         return redirect()->route('user.index')->with('success', 'Thêm mới thành công');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -127,9 +123,11 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $user = User::find($id);
+        $provinces = Province::all();
+
         // dd($users);
         // dd($user->roles);
-        return view('admin.user.edit', compact('user', 'roles'));
+        return view('page.admin.user.edit', compact('user', 'roles','provinces'));
     }
 
     /**
@@ -165,16 +163,6 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'Cập nhật thành công');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
     public function changeStatus($id)
     {
         //
@@ -190,5 +178,14 @@ class UserController extends Controller
             ]);
         }
         return redirect()->route('user.index')->with('success', 'Cập nhật thành công');
+    }
+    public function getDistricts($id)
+    {
+        $districts = District::where('province_id', $id)
+        ->get();
+        // ->pluck("fullname","id");
+
+        // dd(districts);
+        return response()->json($districts);
     }
 }

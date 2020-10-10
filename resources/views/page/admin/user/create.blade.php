@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends('layouts.master')
 @section('title', 'Thêm mới user')
 @section('title-nav', 'Creat User')
 @section('main')
@@ -99,11 +99,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col">
                             <div class="form-group">
                                 <label for="type" class="text-dark">Select type user <span class="text-red">*</span></label>
                                 <select class="form-control" name="type" id="type" >
-                                    <option >--Type--</option>
+                                    <option value="">--Type--</option>
                                     <option value="1">Admin</option>
                                     <option value="2">Portal</option>
                                 </select>
@@ -116,7 +116,7 @@
                             <div class="form-group">
                                 <label for="role_id" class="text-dark">Role <span class="text-red">*</span></label>
                                 <select class="form-control" name="role_id" id="role_id">
-                                    <option>--Role user--</option>
+                                    <option value="">--Role user--</option>
                                     @foreach ($roles as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
@@ -124,7 +124,25 @@
                                 @error('role_id')
                                 <span class="text-red">{{ $message }}</span>
                                 @enderror
-
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="province_id" class="text-dark">Tỉnh</label>
+                                <select class="form-control" name="province_id" id="province_id">
+                                    <option value="">--Tỉnh--</option>
+                                    @foreach ($provinces as $item)
+                                        <option value="{{ $item->code }}">{{ $item->fullname }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="district_id" class="text-dark">Huyện</label>
+                                <select class="form-control" name="district_id" id="district_id">
+                                    <option value="">--Huyện--</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -153,3 +171,40 @@
         </div>
     </div>
 @endsection
+@section('js')
+<script>
+$(document).ready(function() {
+    $('#province_id').change(function() {
+        var countryID = $(this).val();
+        let _url = "{{ url('/admin/getDistricts') }}/" + countryID;
+        // let _url = "../getDistricts/" + countryID;
+        console.log(_url);
+        // "admin/getDistricts/" + countryID
+        if (countryID) {
+            $.ajax({
+                type: "GET",
+                url: _url,
+                success: function(response) {
+                    console.log(response);
+                    if (response) {
+                        $("#district_id").empty();
+                        $("#district_id").append('<option>Select</option>');
+                        $.each(response, function(key, value) {
+                            $("#district_id").append('<option value="' +
+                                value['code'] + '">' + value[
+                                'fullname'] + '</option>');
+                        });
+
+                    } else {
+                        $("#district_id").empty();
+                    }
+                }
+            });
+        } else {
+            $("#district_id").empty();
+        }
+    });
+});
+</script>
+@endsection
+

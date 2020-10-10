@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends('layouts.master')
 @section('title', 'Quản lý user')
 @section('title-nav', 'User')
 @section('main')

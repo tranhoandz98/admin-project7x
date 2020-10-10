@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => 'checkAdmin'], function () {
     Route::get('/', 'HomeController@index')->name('admin');
     Route::get('/logout', 'HomeController@logout')->name('logout');
+    Route::get('getDistricts/{id}','UserController@getDistricts')->name('getDistricts');
     Route::get('user/search','UserController@search')->name('user.search');
     Route::resource('user', 'UserController');
     Route::get('user/changeStatus/{id}','UserController@changeStatus')->name('user.changeStatus');

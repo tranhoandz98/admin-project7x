@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\District;
+use App\Models\Province;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,13 +55,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class,'user_role');
     }
 
-    // public function assignRole($role)
-    // {
-    //     return $this->roles()->sync(
-    //         [Role::whereName($role)->firstOrFail()->id]
-    //     );
+    // public function user_role(){
+    //     return $this->hasOne(UserRole::class, 'user_id', 'id');
     // }
-    public function user_role(){
-        return $this->hasOne(UserRole::class, 'user_id', 'id');
+    public function districts(){
+        return $this->belongsTo(District::class);
+    }
+    public function provinces(){
+        return $this->belongsTo(Province::class);
     }
 }

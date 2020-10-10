@@ -30,3 +30,6 @@ p.cham-than{
     font-size: 135px;
     color: orange;
 }
+.btn-light {
+    border-color: transparent;
+}
