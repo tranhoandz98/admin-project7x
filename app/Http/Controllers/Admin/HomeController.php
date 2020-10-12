@@ -14,7 +14,7 @@ class HomeController extends Controller
     }
     public function login(){
 
-        return view('page.admin.index');
+        return view('page.admin.login');
     }
     public function postLogin(Request $request){
         // dd($request->all());

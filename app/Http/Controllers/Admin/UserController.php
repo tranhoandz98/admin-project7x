@@ -108,6 +108,8 @@ class UserController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'type_user' => $request->type,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
         ]);
         // add key to user_role
         $user->roles()->attach($role);
@@ -157,6 +159,8 @@ class UserController extends Controller
             'department' => $request->department,
             'phone' => $request->phone,
             'type_user' => $request->type,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
         ]);
         // add role_user
         $user->roles()->attach($role);
