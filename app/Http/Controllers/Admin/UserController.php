@@ -125,11 +125,9 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $user = User::find($id);
+        $districts = District::where('province_id',$user->province_id)->get();
         $provinces = Province::all();
-
-        // dd($users);
-        // dd($user->roles);
-        return view('page.admin.user.edit', compact('user', 'roles','provinces'));
+        return view('page.admin.user.edit', compact('user', 'roles','provinces','districts'));
     }
 
     /**

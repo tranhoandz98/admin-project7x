@@ -16,13 +16,16 @@
     <link href="{{ url('public') }}/assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    @yield('css-custom')
     <link href="{{ url('public') }}/assets/css/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
     <link href="{{ url('public') }}/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url('public') }}/plugins/font-icons/fontawesome/css/regular.css">
+    <link rel="stylesheet" href="{{ url('public') }}/plugins/font-icons/fontawesome/css/fontawesome.css">
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <!--  BEGIN CUSTOM STYLE FILE  -->
     <link rel="stylesheet" type="text/css" href="{{ url('public') }}/assets/css/elements/alert.css">
     <!--  END CUSTOM STYLE FILE  -->
+    <link href="{{ url('public') }}/assets/css/font.css" rel="stylesheet" type="text/css" />
+    @yield('css-custom')
     <link href="{{ url('public') }}/assets/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -89,6 +92,10 @@
     <!-- END THEME GLOBAL SCRIPTS -->
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="{{ url('public') }}/assets/js/scrollspyNav.js"></script>
+    <script src="{{ url('public') }}/plugins/font-icons/feather/feather.min.js"></script>
+    <script type="text/javascript">
+        feather.replace();
+    </script>
     <!-- END PAGE LEVEL SCRIPTS -->
     @yield('js-custom')
     <script src="{{ url('public') }}/assets/js/index.js"></script>
