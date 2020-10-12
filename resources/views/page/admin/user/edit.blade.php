@@ -119,7 +119,7 @@
                                 <select class="form-control" name="province_id" id="province_id">
                                     <option value="">--Tỉnh--</option>
                                     @foreach ($provinces as $item)
-                                        <option value="{{ $item->code }}">{{ $item->fullname }}</option>
+                                        <option value="{{ $item->code }}" {{$user->province_id == $item->code ? 'selected' :''}}>{{ $item->fullname }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -129,6 +129,9 @@
                                 <label for="district_id" class="text-dark">Huyện <span class="text-red">*</span></label>
                                 <select class="form-control" name="district_id" id="district_id">
                                     <option value="">--Huyện--</option>
+                                    @foreach ($districts as $item)
+                                    <option value="{{ $item->code }}" {{$user->district_id == $item->code ? 'selected' :''}}>{{ $item->fullname }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
