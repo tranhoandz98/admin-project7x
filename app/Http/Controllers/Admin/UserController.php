@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\District;
 use App\Models\Province;
 
@@ -30,7 +29,7 @@ class UserController extends Controller
     // }
     public function index(Request $request)
     {
-        $s_limit      = $request->limit ?? 1;
+        $s_limit      = $request->limit ?? 5;
         $s_fullname   = $request->display_name;
         $s_role_user  = $request->role_user;
         $s_type_user  = $request->type_user;
@@ -92,7 +91,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(UserRequest $request)
     {
         //
         // dd($request->all());
@@ -137,12 +136,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
         //
+        // dd($request->all());
         $request->validated();
         $role = Role::findOrFail($request->role_id);
         $user = User::find($id);
+        // dd($user);
         // delete user role old
         $role_old = $user->roles;
         foreach ($role_old as $key => $value) {

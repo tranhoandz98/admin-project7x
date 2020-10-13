@@ -20,13 +20,20 @@
     <link href="{{ url('public') }}/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ url('public') }}/plugins/font-icons/fontawesome/css/regular.css">
     <link rel="stylesheet" href="{{ url('public') }}/plugins/font-icons/fontawesome/css/fontawesome.css">
+
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <!--  BEGIN CUSTOM STYLE FILE  -->
     <link rel="stylesheet" type="text/css" href="{{ url('public') }}/assets/css/elements/alert.css">
     <!--  END CUSTOM STYLE FILE  -->
+    <link rel="stylesheet" type="text/css" href="{{ url('public') }}/plugins/jstree/style.min.css">
+
+
     <link href="{{ url('public') }}/assets/css/font.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ url('public') }}/assets/css/forms/theme-checkbox-radio.css">
+    <link href="{{ url('public') }}/assets/css/components/tabs-accordian/custom-accordions.css" rel="stylesheet" type="text/css" />
     @yield('css-custom')
     <link href="{{ url('public') }}/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <script src="{{ url('public') }}/assets/js/libs/jquery-3.1.1.min.js"></script>
 </head>
 
 <body>
@@ -75,7 +82,10 @@
     </div>
     <!-- END MAIN CONTAINER -->
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="{{ url('public') }}/assets/js/libs/jquery-3.1.1.min.js"></script>
+	{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> --}}
+
     <script src="{{ url('public') }}/bootstrap/js/popper.min.js"></script>
     <script src="{{ url('public') }}/bootstrap/js/bootstrap.min.js"></script>
     <script src="{{ url('public') }}/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -92,10 +102,14 @@
     <!-- END THEME GLOBAL SCRIPTS -->
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="{{ url('public') }}/assets/js/scrollspyNav.js"></script>
+
     <script src="{{ url('public') }}/plugins/font-icons/feather/feather.min.js"></script>
+
     <script type="text/javascript">
         feather.replace();
     </script>
+    <script src="{{ url('public') }}/plugins/jstree/jstree.min.js"></script>
+    <script src="{{ url('public') }}/assets/js/components/ui-accordions.js"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
     @yield('js-custom')
     <script src="{{ url('public') }}/assets/js/index.js"></script>
@@ -108,7 +122,7 @@
         $(document).ready(function() {
             $('#province_id').change(function() {
                 var countryID = $(this).val();
-                let _url = "{{ url('/admin/getDistricts') }}/" + countryID;
+                let _url = "{{ url('/admin/user/getDistricts') }}/" + countryID;
                 // let _url = "../getDistricts/" + countryID;
                 console.log(_url);
                 // "admin/getDistricts/" + countryID

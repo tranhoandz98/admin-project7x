@@ -22,10 +22,10 @@
                 </a>
             </li>
             <li class="menu">
-                <a href="{{ route('user.index') }}" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{ route('role.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i data-feather="server"></i>
-                        <span>User</span>
+                        <span>Role</span>
                     </div>
                 </a>
             </li>

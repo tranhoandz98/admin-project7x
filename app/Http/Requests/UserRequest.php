@@ -3,21 +3,14 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateUserRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    // protected $id;
-    // public function __construct($id)
-    // {
-    //     $this->id = $id;
-    // }
-
     public function authorize()
     {
         return true;
@@ -30,30 +23,33 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-            'name' => ['required', Rule::unique('users')->ignore($this->user)],
+        $arr =  [
+            'name' => 'required|unique:users,name,'.$this->user,
             'code' => 'required',
-            'email' => ['required', Rule::unique('users')->ignore($this->user)],
-            // 'phone' => [Rule::unique('users')->ignore($this->user)],
+            'phone' => 'max:15',
+            'email' => 'required|unique:users,email,'.$this->user,
             'display_name' => 'required',
             'type' => 'numeric',
-            'phone' => 'max:15',
             'role_id' => 'numeric',
         ];
+        if($this->attributes->has('password')){
+            $arr['password'] = 'required';
+            $arr['re_password'] = 'required';
+        }
+        return $arr;
     }
-
     public function messages()
     {
         return [
-            'name.require' => 'Tên không được bỏ trống',
+            'name.required' => 'Tên không được bỏ trống',
             'name.unique' => 'Tên tài khoản đã tồn tại',
-            'code.require' => 'Code không được bỏ trống',
-            'email.require' => 'Email không được bỏ trống',
+            'code.required' => 'Code không được bỏ trống',
             'phone.max' => 'Số điện thoại k vượt quá 15 kí tự',
+            'email.required' => 'Email không được bỏ trống',
             'email.unique' => 'Email đã tồn tại',
-            // 'phone.unique' => 'Số điện thoại đã tồn tại',
-            'display_name.require' => 'Display name không được bỏ trống',
+            'display_name.required' => 'Display name không được bỏ trống',
+            'password.required' => 'Mật khẩu không được bỏ trống',
+            're_password.required' => 'Mật khẩu nhập lại không được bỏ trống',
             'type.numeric' => 'Loại user không được bỏ trống',
             'role_id.numeric' => 'Quyền user không được bỏ trống',
         ];
