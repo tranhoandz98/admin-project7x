@@ -97,7 +97,6 @@ class UserController extends Controller
         // dd($request->all());
         $validated = $request->validated();
         // dd($validated);
-        $role = Role::findOrFail($request->role_id);
         $user = User::create([
             'name' => $request->name,
             'code' => $request->code,
@@ -111,6 +110,7 @@ class UserController extends Controller
             'district_id' => $request->district_id,
         ]);
         // add key to user_role
+        $role = Role::findOrFail($request->role_id);
         $user->roles()->attach($role);
         return redirect()->route('user.index')->with('success', 'Thêm mới thành công');
     }

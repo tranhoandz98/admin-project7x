@@ -1,6 +1,9 @@
 .text-red {
     color: red;
 }
+.error{
+    color: red!important;
+  }
 .bg-gray {
     background-color: #f1f2f3 !important;
 }

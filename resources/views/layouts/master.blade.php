@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>@yield('title') </title>
     <link rel="icon" type="image/x-icon" href="{{ url('public') }}/assets/img/favicon.ico" />
     <link href="{{ url('public') }}/assets/css/loader.css" rel="stylesheet" type="text/css" />
@@ -26,11 +28,15 @@
     <link rel="stylesheet" type="text/css" href="{{ url('public') }}/assets/css/elements/alert.css">
     <!--  END CUSTOM STYLE FILE  -->
     <link rel="stylesheet" type="text/css" href="{{ url('public') }}/plugins/jstree/style.min.css">
+    <link href="{{ url('public') }}/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('public') }}/plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('public') }}/assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css" />
 
 
     <link href="{{ url('public') }}/assets/css/font.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ url('public') }}/assets/css/forms/theme-checkbox-radio.css">
-    <link href="{{ url('public') }}/assets/css/components/tabs-accordian/custom-accordions.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('public') }}/assets/css/components/tabs-accordian/custom-accordions.css" rel="stylesheet"
+        type="text/css" />
     @yield('css-custom')
     <link href="{{ url('public') }}/assets/css/style.css" rel="stylesheet" type="text/css" />
     <script src="{{ url('public') }}/assets/js/libs/jquery-3.1.1.min.js"></script>
@@ -82,9 +88,11 @@
     </div>
     <!-- END MAIN CONTAINER -->
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-	{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script> --}}
 
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script> --}}
 
     <script src="{{ url('public') }}/bootstrap/js/popper.min.js"></script>
     <script src="{{ url('public') }}/bootstrap/js/bootstrap.min.js"></script>
@@ -95,6 +103,7 @@
         $(document).ready(function() {
             App.init();
         });
+
     </script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="{{ url('public') }}/plugins/highlight/highlight.pack.js"></script>
@@ -107,9 +116,14 @@
 
     <script type="text/javascript">
         feather.replace();
+
     </script>
     <script src="{{ url('public') }}/plugins/jstree/jstree.min.js"></script>
     <script src="{{ url('public') }}/assets/js/components/ui-accordions.js"></script>
+    <script src="{{ url('public') }}/plugins/jquery-validate/jquery.validate.js"></script>
+    <script src="{{ url('public') }}/plugins/sweetalerts/sweetalert2.min.js"></script>
+    <script src="{{ url('public') }}/plugins/sweetalerts/custom-sweetalert.js"></script>
+
     <!-- END PAGE LEVEL SCRIPTS -->
     @yield('js-custom')
     <script src="{{ url('public') }}/assets/js/index.js"></script>
@@ -140,7 +154,6 @@
                                         value['code'] + '">' + value[
                                             'fullname'] + '</option>');
                                 });
-
                             } else {
                                 $("#district_id").empty();
                             }

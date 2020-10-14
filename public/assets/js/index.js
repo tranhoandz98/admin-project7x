@@ -11,6 +11,7 @@
     e.stopPropagation();
   });
 
+
   $(document).on('click', 'button', function(e) {
     switch ($(this).text()) {
       case 'Collepsed':

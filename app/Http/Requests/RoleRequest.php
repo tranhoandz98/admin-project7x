@@ -24,8 +24,8 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         $arr =  [
-            'code' => 'required|unique:users,code,'.$this->role,
-            'name' => 'required|unique:users,name,'.$this->role,
+            'code' => 'required|unique:roles,code,'.$this->role,
+            'name' => 'required|unique:roles,name,'.$this->role,
             'description' => 'required',
         ];
         return $arr;

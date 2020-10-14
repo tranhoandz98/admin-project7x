@@ -31,6 +31,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => 'check
     Route::resource('user', 'UserController');
     // role
     // Route::get('role/getPermission','RoleController@getPermission');
+    Route::get('role/destroyRole/{id}','RoleController@destroyRole')->name('role.destroyRole');
     Route::resource('role', 'RoleController');
 
 });

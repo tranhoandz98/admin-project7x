@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="widget-content widget-content-area">
-                <form action="{{ route('user.update',$user->id) }}" method="POST">
+                <form action="{{ route('user.update',$user->id) }}" method="POST" id="formPhone">
                     @method('PUT')
                     @csrf
                     <div class="row">
@@ -60,7 +60,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="phone" class="text-dark">Phone </label>
-                                <input type="number" class="form-control" name="phone" id="phone"
+                                <input type="text" class="form-control" name="phone" id="phone"
                                     aria-describedby="helpId" placeholder="" value="{{ $user->phone }}">
                                     @error('phone')
                                     <span class="text-red">{{ $message }}</span>
@@ -137,11 +137,11 @@
                         </div>
                     </div>
                     <div class="text-center">
-                                <button type="submit" class="btn btn-success btn-lg">
+                                <button type="submit" class="btn btn-success btn-lg" id="submit" class="submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                                     Save
                                 </button>
-                                <a href="{{ url()->previous() }}" class="btn-lg btn-dark btn">
+                                <a href="{{ route('user.index') }}" class="btn-lg btn-dark btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-skip-back"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg>
                                         Back</a>
                     </div>
@@ -149,4 +149,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js-custom')
+<script src="{{ url('public') }}/plugins/jquery-validate/validate-phone-vn.js"></script>
 @endsection

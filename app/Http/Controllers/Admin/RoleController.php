@@ -62,8 +62,8 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
-// dd($request->all());
-$validated = $request->validated();
+        // dd($request->all());
+        $validated = $request->validated();
         $role = Role::create([
             'code' => $request->code,
             'name' => $request->name,
@@ -71,11 +71,12 @@ $validated = $request->validated();
             'description' => $request->description,
 
         ]);
-        foreach ($request->permission as $key => $value) {
-            // dump($value);
-            $permission = Permission::where('id',$request->permission)->first();
-            // dump($permission);
-            $role->permissions()->attach($permission);
+        if ($request->has('permission')) {
+            // dd($request->permission);
+            foreach ($request->permission as $key => $value) {
+                $role->permissions()->attach($value);
+            }
+            // dd('ok');
         }
         return redirect()->route('role.index')->with('success', 'Thêm mới thành công');
     }
@@ -100,6 +101,17 @@ $validated = $request->validated();
     public function edit($id)
     {
         //
+        $role = Role::find($id);
+        $permission_active = $role->permissions;
+        // foreach ($permission_active as $key => $value) {
+        //     # code...
+        //     dump($value);
+        // }
+        // dd('ok');
+        $parents = Permission::distinct()->select('parent', 'parent_name')->get();
+        $permissions = Permission::all();
+        // dd($permission);
+        return view('page.admin.role.edit', compact('role', 'parents', 'permissions', 'permission_active'));
     }
 
     /**
@@ -109,19 +121,61 @@ $validated = $request->validated();
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleRequest $request, $id)
     {
         //
+        $validated = $request->validated();
+        $role = Role::find($id);
+        // dd($role);
+        $permisson_old = $role->permissions;
+        // dd($permisson_old);
+        // dd($permisson_old->count());
+        if ($permisson_old->count() > 0) {
+            foreach ($permisson_old as $key => $value) {
+                $role->permissions()->detach($value);
+            }
+        }
+        // dd($permisson_old);
+        $role->update([
+            'code' => $request->code,
+            'name' => $request->name,
+            'updated_at' => 1,
+            'description' => $request->description,
+
+        ]);
+        if ($request->has('permission')) {
+            // dd($request->permission);
+            foreach ($request->permission as $key => $value) {
+                $role->permissions()->attach($value);
+            }
+            // dd('ok');
+        }
+        return redirect()->route('role.index')->with('success', 'Cập nhật thành công');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroyRole($id)
     {
-        //
+        $role = Role::find($id);
+        // $us$role->users;
+        $countUser = $role->users->count();
+        if ($countUser > 0) {
+            return response()->json([
+                'status' => '1',
+                'message' => 'Không thể xóa Role'
+            ],200);
+        }
+        // dd($countUser);
+        // dd('not ok');
+        $permisson_old = $role->permissions;
+        if ($permisson_old->count() > 0) {
+            foreach ($permisson_old as $key => $value) {
+                $role->permissions()->detach($value);
+            }
+        }
+        $role->delete();
+        return response()->json([
+            'status' => '2',
+            'message' => 'Xóa role thành công'
+        ],200);
     }
 }

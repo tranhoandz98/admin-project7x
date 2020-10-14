@@ -116,7 +116,7 @@
                             <i data-feather="save"></i>
                             Save
                         </button>
-                        <a href="{{ url()->previous() }}" class="btn-lg btn-dark btn">
+                        <a href="{{ route('role.index') }}" class="btn-lg btn-dark btn">
                             <i data-feather="skip-back"></i>
                             Back</a>
                     </div>
@@ -124,4 +124,8 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js-custom')
+
+</script>
 @endsection

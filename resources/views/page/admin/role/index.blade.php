@@ -34,11 +34,10 @@
                             <div class="form-group">
                                 <label for=""></label>
                                 <input type="text" class="form-control" name="display_name" id="display-name"
-                                    aria-describedby="helpId" placeholder="Role name or role code"
-                                    @if ($s_fullname)
-                            value="{{$s_fullname}}"
-                                    @endif
-                                        >
+                                    aria-describedby="helpId" placeholder="Role name or role code" @if ($s_fullname)
+                                value="{{ $s_fullname }}"
+                                @endif
+                                >
                             </div>
                         </div>
                         <div class="mt-3 pr-3 pt-1">
@@ -77,23 +76,13 @@
                             </thead>
                             <tbody>
                                 @foreach ($roles as $role)
-                                    <tr>
+                                    <tr id="link{{ $role->id }}">
                                         <td class="text-center">{{ $loop->index + 1 }}</td>
                                         <td>{{ $role->code }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->description }}</td>
                                         <td class="text-center">{{ $role->created_at }}</td>
                                         <td class="text-center">
-                                            {{-- watch --}}
-                                            <a href="{{ route('role.edit', $role->id) }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-eye text-primary">
-                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                    <circle cx="12" cy="12" r="3"></circle>
-                                                </svg>
-                                            </a>
                                             {{-- edit --}}
                                             <a href="{{ route('role.edit', $role->id) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -105,8 +94,7 @@
                                                     </path>
                                                 </svg>
                                             </a>
-                                            {{-- delete --}}
-                                            <a href="{{ route('role.edit', $role->id) }}">
+                                            <a data-id="{{ $role->id }}" class="deleteRole" href="javascript:void(0)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                     stroke-linecap="round" stroke-linejoin="round"
@@ -119,7 +107,6 @@
                                                     <line x1="14" y1="11" x2="14" y2="17"></line>
                                                 </svg>
                                             </a>
-
                                         </td>
                                     </tr>
                                 @endforeach
@@ -149,4 +136,61 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js-custom')
+    <script>
+        $(document).ready(function() {
+            // $.ajaxSetup({
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     }
+            // });
+            $('.deleteRole').click(function() {
+                let idRole = $(this).data("id");
+                let url = "{{ url('/admin/role/destroyRole') }}/" + idRole;
+                // console.log(url);
+                swal({
+                    title: 'Are you sure?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                    padding: '2em'
+                }).then(function(result) {
+                    // console.log(id);
+                    console.log(url);
+                    if (result.value) {
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            success: function(data) {
+                                console.log('success:', data);
+                                if (data.status == 1) {
+                                    swal(
+                                        'warning!',
+                                        data.message,
+                                        'warning'
+                                    )
+                                } else {
+                                    swal(
+                                        'Deleted!',
+                                        data.message,
+                                        'success'
+                                    )
+                                    location.reload();
+                                }
+
+                                //     $("#link" + idRole).remove();
+                            },
+                            // error: function(data) {
+                            //     console.log('Error:', data);
+                            // }
+                        });
+
+                    }
+
+                })
+            });
+        });
+
+    </script>
 @endsection

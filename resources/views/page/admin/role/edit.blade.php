@@ -14,14 +14,15 @@
                 </div>
             </div>
             <div class="widget-content widget-content-area">
-                <form action="{{ route('role.store') }}" method="POST">
+                <form action="{{ route('role.update', $role->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="code" class="text-dark">Role code <span class="text-red">*</span></label>
                                 <input type="text" class="form-control" name="code" id="code" aria-describedby="helpId"
-                                    placeholder="">
+                                    placeholder="" value="{{ $role->code }}">
                                 @error('code')
                                 <span class="text-red">{{ $message }}</span>
                                 @enderror
@@ -31,7 +32,7 @@
                             <div class="form-group">
                                 <label for="name" class="text-dark">Display name<span class="text-red">*</span></label>
                                 <input type="text" class="form-control" name="name" id="name" aria-describedby="helpId"
-                                    placeholder="">
+                                    placeholder="" value="{{ $role->name }}">
                                 @error('name')
                                 <span class="text-red">{{ $message }}</span>
                                 @enderror
@@ -42,7 +43,7 @@
                                 <label for="description" class="text-dark">Description<span
                                         class="text-red">*</span></label>
                                 <input type="text" class="form-control" name="description" id="description"
-                                    aria-describedby="helpId" placeholder="Nhập họ tên">
+                                    aria-describedby="helpId" placeholder="" value="{{ $role->description }}">
                                 @error('description')
                                 <span class="text-red">{{ $message }}</span>
                                 @enderror
@@ -55,8 +56,8 @@
                             <div id="withoutSpacing" class="">
                             </div>
                             <div class="controls mb-2">
-                                <button class="btn btn-primary" type="button">Collepsed</button>
-                                <button class="btn btn-warning" type="button">Expanded</button>
+                                {{-- <button class="btn btn-primary" type="button">Collepsed</button>
+                                <button class="btn btn-warning" type="button">Expanded</button> --}}
                                 <button class="btn btn-success" type="button">Checked All</button>
                                 <button class="btn btn-danger" type="button">Unchek All</button>
                             </div>
@@ -85,43 +86,51 @@
 
                                             </script>
                                         </span>
-                                        <input type="checkbox" name="" value="" id="pa{{ $parent->parent }}" />
+                                        <input type="checkbox" name="" value="" id="pa{{ $parent->parent }}"
+                                        @foreach ($permission_active as $per_active)
+                                            {{ $per_active->parent == $parent->parent ? 'checked' : '' }}
+                                        @endforeach
+                                        />
                                         <label for="pa{{ $parent->parent }}">
                                             {{ $parent->parent_name }}
                                         </label>
                                         <ul>
                                             @foreach ($permissions as $permission)
-                                            <div id="withoutSpacingAccordion{{ $parent->parent }}" class="collapse"
-                                                aria-labelledby="heading{{ $parent->parent }}" data-parent="#withoutSpacing"
-                                                >
-                                                @if ($permission->parent == $parent->parent)
-                                                    <li class="">
-                                                        <input type="checkbox" id="per{{ $permission->id }}" name="permission[]"
-                                                            value="{{ $permission->id }}" />
+                                                <div id="withoutSpacingAccordion{{ $parent->parent }}" class="collapse"
+                                                    aria-labelledby="heading{{ $parent->parent }}"
+                                                    data-parent="#withoutSpacing">
+                                                    @if ($permission->parent == $parent->parent)
+                                                        <li class="">
+                                                            <input type="checkbox" id="per{{ $permission->id }}"
+                                                                name="permission[]" value="{{ $permission->id }}"
+                                                                    @foreach ($permission_active as $per_active)
+                                                                            {{ $per_active->id == $permission->id ? 'checked' : '' }}
+                                                                    @endforeach
+                                                            >
                                                         <label for="per{{ $permission->id }}">
                                                             {{ $permission->description }}
                                                         </label>
-                                                    </li>
-                                                @endif
-                                            </div>
-                                            @endforeach
-                                        </ul>
                                     </li>
-                                @endforeach
-                            </ul>
+                                @endif
                         </div>
+                        @endforeach
+                        </ul>
+                        </li>
+                        @endforeach
+                        </ul>
                     </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-success btn-lg">
-                            <i data-feather="save"></i>
-                            Save
-                        </button>
-                        <a href="{{ url()->previous() }}" class="btn-lg btn-dark btn">
-                            <i data-feather="skip-back"></i>
-                            Back</a>
-                    </div>
-                </form>
             </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i data-feather="save"></i>
+                    Save
+                </button>
+                <a href="{{ route('role.index') }}" class="btn-lg btn-dark btn">
+                    <i data-feather="skip-back"></i>
+                    Back</a>
+            </div>
+            </form>
         </div>
+    </div>
     </div>
 @endsection
