@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => 'check
     // Route::get('role/getPermission','RoleController@getPermission');
     Route::get('role/destroyRole/{id}','RoleController@destroyRole')->name('role.destroyRole');
     Route::resource('role', 'RoleController');
+    Route::get('showPermission','HomeController@showPer')->name('showPer');
 
 });
 Route::get('/admin/login', 'Admin\HomeController@login')->name('login');

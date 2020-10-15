@@ -68,7 +68,6 @@ class UserController extends Controller
             's_type_user',
             's_created_at'
         ));
-        //
     }
     /**
      * Show the form for creating a new resource.
@@ -140,9 +139,7 @@ class UserController extends Controller
         $user = User::find($id);
         // delete user role old
         $role_old = $user->roles;
-        foreach ($role_old as $key => $value) {
-            $user->roles()->detach($value);
-        }
+            $user->roles()->detach();
         // Update user
         $user->update([
             'name' => $request->name,

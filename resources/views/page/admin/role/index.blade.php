@@ -50,6 +50,7 @@
                                 </svg>
                                 Search</button>
                         </div>
+                        @can('create', App\Models\Role::class)
                         <div class="mt-3 pt-1">
                             <a href="{{ route('role.create') }}" class="btn-rounded btn-lg btn-success btn ">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -61,6 +62,7 @@
                                 <span>Add</span>
                             </a>
                         </div>
+                        @endcan
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
@@ -84,6 +86,7 @@
                                         <td class="text-center">{{ $role->created_at }}</td>
                                         <td class="text-center">
                                             {{-- edit --}}
+                                            @can('update', App\Models\Role::class)
                                             <a href="{{ route('role.edit', $role->id) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -94,7 +97,9 @@
                                                     </path>
                                                 </svg>
                                             </a>
+                                            @endcan
                                             {{-- delete --}}
+                                            @can('delete', App\Models\Role::class)
                                             <a data-id="{{ $role->id }}" class="deleteRole" href="javascript:void(0)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -108,6 +113,7 @@
                                                     <line x1="14" y1="11" x2="14" y2="17"></line>
                                                 </svg>
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

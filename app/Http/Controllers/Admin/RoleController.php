@@ -131,9 +131,7 @@ class RoleController extends Controller
         // dd($permisson_old);
         // dd($permisson_old->count());
         if ($permisson_old->count() > 0) {
-            foreach ($permisson_old as $key => $value) {
-                $role->permissions()->detach($value);
-            }
+            $role->permissions()->detach();
         }
         // dd($permisson_old);
         $role->update([
@@ -162,20 +160,18 @@ class RoleController extends Controller
             return response()->json([
                 'status' => '1',
                 'message' => 'Không thể xóa Role'
-            ],200);
+            ], 200);
         }
         // dd($countUser);
         // dd('not ok');
         $permisson_old = $role->permissions;
         if ($permisson_old->count() > 0) {
-            foreach ($permisson_old as $key => $value) {
-                $role->permissions()->detach($value);
-            }
+            $role->permissions()->detach();
         }
         $role->delete();
         return response()->json([
             'status' => '2',
             'message' => 'Xóa role thành công'
-        ],200);
+        ], 200);
     }
 }

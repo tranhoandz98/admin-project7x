@@ -79,6 +79,7 @@
                                 </svg>
                                 Search</button>
                         </div>
+                        @can('create',App\User::class)
                         <div class="mt-3 pt-1">
                             <a href="{{ route('user.create') }}" class="btn-rounded btn-lg btn-success btn ">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -87,10 +88,10 @@
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
-
                                 <span>Add</span>
                             </a>
                         </div>
+                        @endcan
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
@@ -130,6 +131,7 @@
                                         </td>
                                         <td class="text-center">
                                             {{-- edit --}}
+                                            @can('update', App\User::class)
                                             <a href="{{ route('user.edit', ['user' => $user->id]) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -163,6 +165,8 @@
                                                     </svg>
                                                 </a>
                                             @endif
+                                            @endcan
+                                            @can('delete', App\User::class)
                                             {{-- delete --}}
                                             <a data-id="{{ $user->id }}" class="deleteUser" href="javascript:void(0)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -177,6 +181,7 @@
                                                     <line x1="14" y1="11" x2="14" y2="17"></line>
                                                 </svg>
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

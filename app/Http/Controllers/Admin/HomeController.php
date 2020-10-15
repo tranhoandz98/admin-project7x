@@ -29,6 +29,11 @@ class HomeController extends Controller
         Auth::logout();
         return redirect()->route('admin');
     }
+    public function showPer(){
+        $user = Auth::user();
+        $role = $user->roles->first();
+        return view('page.admin.show',compact('user'));
+    }
 
 
 }
