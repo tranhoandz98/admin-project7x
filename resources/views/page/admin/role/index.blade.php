@@ -140,11 +140,6 @@
 @section('js-custom')
     <script>
         $(document).ready(function() {
-            // $.ajaxSetup({
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //     }
-            // });
             $('.deleteRole').click(function() {
                 let idRole = $(this).data("id");
                 let url = "{{ url('/admin/role/destroyRole') }}/" + idRole;
@@ -178,19 +173,11 @@
                                     )
                                     location.reload();
                                 }
-
-                                //     $("#link" + idRole).remove();
                             },
-                            // error: function(data) {
-                            //     console.log('Error:', data);
-                            // }
                         });
-
                     }
-
                 })
             });
         });
-
     </script>
 @endsection

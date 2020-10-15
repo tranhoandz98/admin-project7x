@@ -34,7 +34,6 @@ class UserController extends Controller
         $s_role_user  = $request->role_user;
         $s_type_user  = $request->type_user;
         $s_created_at = $request->created_at;
-        // dd($s_limit, $s_fullname, $s_role_user, $s_type_user, $s_created_at);
         $roles = Role::all();
         // DB::enableQueryLog();
         $users = User::where(function ($query) use ($s_fullname) {
@@ -79,7 +78,6 @@ class UserController extends Controller
     public function create()
     {
         //
-
         $roles = Role::all();
         $provinces = Province::all();
         return view('page.admin.user.create', compact('roles', 'provinces'));
@@ -94,9 +92,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         //
-        // dd($request->all());
         $validated = $request->validated();
-        // dd($validated);
         $user = User::create([
             'name' => $request->name,
             'code' => $request->code,
@@ -108,6 +104,7 @@ class UserController extends Controller
             'type_user' => $request->type,
             'province_id' => $request->province_id,
             'district_id' => $request->district_id,
+            'status' => 1,
         ]);
         // add key to user_role
         $role = Role::findOrFail($request->role_id);
@@ -124,9 +121,9 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $user = User::find($id);
-        $districts = District::where('province_id',$user->province_id)->get();
+        $districts = District::where('province_id', $user->province_id)->get();
         $provinces = Province::all();
-        return view('page.admin.user.edit', compact('user', 'roles','provinces','districts'));
+        return view('page.admin.user.edit', compact('user', 'roles', 'provinces', 'districts'));
     }
 
     /**
@@ -138,12 +135,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        //
-        // dd($request->all());
         $request->validated();
         $role = Role::findOrFail($request->role_id);
         $user = User::find($id);
-        // dd($user);
         // delete user role old
         $role_old = $user->roles;
         foreach ($role_old as $key => $value) {
@@ -160,6 +154,7 @@ class UserController extends Controller
             'type_user' => $request->type,
             'province_id' => $request->province_id,
             'district_id' => $request->district_id,
+            'status' => 1,
         ]);
         // add role_user
         $user->roles()->attach($role);
@@ -168,8 +163,6 @@ class UserController extends Controller
 
     public function changeStatus($id)
     {
-        //
-        // dd($request->all());
         $user = User::find($id);
         if ($user->status == 1) {
             $user->update([
@@ -180,15 +173,15 @@ class UserController extends Controller
                 'status' => 1
             ]);
         }
-        return redirect()->route('user.index')->with('success', 'Cập nhật thành công');
+        return response()->json([
+            'status'  => '1',
+            'message' => 'Thay đổi thành công',
+        ]);
     }
     public function getDistricts($id)
     {
         $districts = District::where('province_id', $id)
-        ->get();
-        // ->pluck("fullname","id");
-
-        // dd(districts);
+            ->get();
         return response()->json($districts);
     }
 }
