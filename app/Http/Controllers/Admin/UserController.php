@@ -184,4 +184,26 @@ class UserController extends Controller
             ->get();
         return response()->json($districts);
     }
+    public function destroyUser($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $role_old = $user->roles;
+            // dd('ok');
+            if ($role_old){
+                foreach ($role_old as $key => $value) {
+                    $user->roles()->detach($value);
+                }
+            }
+            $user->delete();
+            return response()->json([
+                'status' => 1,
+                'message' => 'Xóa thành công'
+            ]);
+        }
+        return response()->json([
+            'status' => 2,
+            'message' => 'Lỗi hệ thống'
+        ]);
+    }
 }

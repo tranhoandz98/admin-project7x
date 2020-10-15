@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => 'check
     Route::get('user/search','UserController@search')->name('user.search');
     Route::resource('user', 'UserController');
     Route::get('user/changeStatus/{id}','UserController@changeStatus')->name('user.changeStatus');
+    Route::get('user/destroyUser/{id}','UserController@destroyUser')->name('user.destroyUser');
     Route::resource('user', 'UserController');
     // role
     // Route::get('role/getPermission','RoleController@getPermission');

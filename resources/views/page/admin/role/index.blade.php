@@ -94,6 +94,7 @@
                                                     </path>
                                                 </svg>
                                             </a>
+                                            {{-- delete --}}
                                             <a data-id="{{ $role->id }}" class="deleteRole" href="javascript:void(0)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -161,9 +162,9 @@
                                 console.log('success:', data);
                                 if (data.status == 1) {
                                     swal(
-                                        'warning!',
+                                        'Cancelled!',
                                         data.message,
-                                        'warning'
+                                        'error'
                                     )
                                 } else {
                                     swal(
@@ -171,7 +172,9 @@
                                         data.message,
                                         'success'
                                     )
-                                    location.reload();
+                                    $('body').click(function(e) {
+                                        window.location.reload(1);
+                                    });
                                 }
                             },
                         });
@@ -179,5 +182,6 @@
                 })
             });
         });
+
     </script>
 @endsection

@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
         $arr =  [
             'name' => 'required|unique:users,name,'.$this->user,
             'code' => 'required',
-            'phone' =>    'min:10',
+            // 'phone' =>    'min:10',
             'email' => 'required|unique:users,email,'.$this->user,
             'display_name' => 'required',
             'type' => 'numeric',
@@ -44,7 +44,7 @@ class UserRequest extends FormRequest
             'name.required' => 'Tên không được bỏ trống',
             'name.unique' => 'Tên tài khoản đã tồn tại',
             'code.required' => 'Code không được bỏ trống',
-            'phone.min' => 'Số điện thoại có ít nhất 10 kí tự',
+            // 'phone.min' => 'Số điện thoại có ít nhất 10 kí tự',
             'email.required' => 'Email không được bỏ trống',
             'email.unique' => 'Email đã tồn tại',
             'display_name.required' => 'Display name không được bỏ trống',

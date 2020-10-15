@@ -42,7 +42,7 @@
                                 <label for="description" class="text-dark">Description<span
                                         class="text-red">*</span></label>
                                 <input type="text" class="form-control" name="description" id="description"
-                                    aria-describedby="helpId" placeholder="Nhập họ tên">
+                                    aria-describedby="helpId" placeholder="">
                                 @error('description')
                                 <span class="text-red">{{ $message }}</span>
                                 @enderror
