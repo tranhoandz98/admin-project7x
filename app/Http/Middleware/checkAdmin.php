@@ -16,11 +16,11 @@ class checkAdmin
     public function handle($request, Closure $next)
     {
         if (Auth::check()){
-            if (Auth::user()){
+            if (Auth::user()->status == 1){
                 return $next($request);
             }
             else{
-                return redirect('/admin/login');
+                return redirect('/admin/login')->with('errors' , 'Tài khoản đã khóa');;
             }
         }
         return redirect('/admin/login');

@@ -23,10 +23,19 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => 'checkAdmin'], function () {
     Route::get('/', 'HomeController@index')->name('admin');
     Route::get('/logout', 'HomeController@logout')->name('logout');
-    Route::get('getDistricts/{id}','UserController@getDistricts')->name('getDistricts');
+    // user
+    Route::get('user/getDistricts/{id}','UserController@getDistricts')->name('user.getDistricts');
     Route::get('user/search','UserController@search')->name('user.search');
     Route::resource('user', 'UserController');
     Route::get('user/changeStatus/{id}','UserController@changeStatus')->name('user.changeStatus');
+    Route::get('user/destroyUser/{id}','UserController@destroyUser')->name('user.destroyUser');
+    Route::resource('user', 'UserController');
+    // role
+    // Route::get('role/getPermission','RoleController@getPermission');
+    Route::get('role/destroyRole/{id}','RoleController@destroyRole')->name('role.destroyRole');
+    Route::resource('role', 'RoleController');
+    Route::get('showPermission','HomeController@showPer')->name('showPer');
+
 });
 Route::get('/admin/login', 'Admin\HomeController@login')->name('login');
 Route::post('/admin/login', 'Admin\HomeController@postLogin');

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\District;
+use App\Models\Permission;
 use App\Models\Province;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,17 +21,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'display_name',
-        'phone',
-        'department',
-        'code',
-        'status',
-        'type_user'
-    ];
+    protected $permissionList = null;
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -54,14 +46,49 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class,'user_role');
     }
-
-    // public function user_role(){
-    //     return $this->hasOne(UserRole::class, 'user_id', 'id');
-    // }
-    public function districts(){
+    public function districts()
+    {
         return $this->belongsTo(District::class);
     }
-    public function provinces(){
+    public function provinces()
+    {
         return $this->belongsTo(Province::class);
     }
+
+    // public function hasRole($role)
+    // {
+    //     if (is_string($role)) {
+    //         return $this->roles->contains('name', $role);
+    //     }
+
+    //     return false;
+    // }
+
+    public function hasPermission($permission = null)
+    {
+        if (is_null($permission)) {
+            return $this->getPermissions()->count();
+        }
+
+        if (is_string($permission)) {
+            return $this->getPermissions()->contains('name', $permission);
+        }
+
+        return false;
+    }
+
+    private function getPermissions()
+    {
+        $role = $this->roles->first();
+        if ($role) {
+            if (! $role->relationLoaded('permissions')) {
+                $this->roles->load('permissions');
+            }
+
+            $this->permissionList = $this->roles->pluck('permissions')->flatten();
+        }
+
+        return $this->permissionList ?? collect();
+    }
+
 }

@@ -13,6 +13,7 @@
                     </div>
                 </a>
             </li>
+            @can('viewAny', App\User::class)
             <li class="menu">
                 <a href="{{ route('user.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -21,11 +22,22 @@
                     </div>
                 </a>
             </li>
+            @endcan
+            @can('viewAny', App\Models\Role::class)
             <li class="menu">
-                <a href="{{ route('user.index') }}" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{ route('role.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i data-feather="server"></i>
-                        <span>User</span>
+                        <span>Role</span>
+                    </div>
+                </a>
+            </li>
+            @endcan
+            <li class="menu">
+                <a href="{{ route('showPer') }}" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i data-feather="server"></i>
+                        <span>Show</span>
                     </div>
                 </a>
             </li>

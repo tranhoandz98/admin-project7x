@@ -10,6 +10,7 @@ class District extends Model
 {
     //
     protected $table = 'cs_category_district';
+    protected $guarded=[];
 
     public function users(){
       return  $this->hasMany(User::class);
