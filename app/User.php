@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Role;
 use App\Models\UserRole;
-// use App\Traits\HasPermissions;
 
 
 class User extends Authenticatable
@@ -56,14 +55,14 @@ class User extends Authenticatable
         return $this->belongsTo(Province::class);
     }
 
-    public function hasRole($role)
-    {
-        if (is_string($role)) {
-            return $this->roles->contains('name', $role);
-        }
+    // public function hasRole($role)
+    // {
+    //     if (is_string($role)) {
+    //         return $this->roles->contains('name', $role);
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     public function hasPermission($permission = null)
     {

@@ -133,38 +133,6 @@
             //   e.preventDefault();
             $('#searchSubmit').click();
         });
-        $(document).ready(function() {
-            $('#province_id').change(function() {
-                var countryID = $(this).val();
-                let _url = "{{ url('/admin/user/getDistricts') }}/" + countryID;
-                // let _url = "../getDistricts/" + countryID;
-                console.log(_url);
-                // "admin/getDistricts/" + countryID
-                if (countryID) {
-                    $.ajax({
-                        type: "GET",
-                        url: _url,
-                        success: function(response) {
-                            console.log(response);
-                            if (response) {
-                                $("#district_id").empty();
-                                $("#district_id").append('<option>Select</option>');
-                                $.each(response, function(key, value) {
-                                    $("#district_id").append('<option value="' +
-                                        value['code'] + '">' + value[
-                                            'fullname'] + '</option>');
-                                });
-                            } else {
-                                $("#district_id").empty();
-                            }
-                        }
-                    });
-                } else {
-                    $("#district_id").empty();
-                }
-            });
-        });
-
     </script>
 </body>
 

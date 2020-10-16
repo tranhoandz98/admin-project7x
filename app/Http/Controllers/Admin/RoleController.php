@@ -19,9 +19,6 @@ class RoleController extends Controller
     {
         $s_limit      = $request->limit ?? 5;
         $s_fullname   = $request->display_name;
-        // dd($s_limit, $s_fullname, $s_role_user, $s_type_user, $s_created_at);
-        // $roles = Role::all();
-        // DB::enableQueryLog();
         $roles = Role::where(function ($query) use ($s_fullname) {
             if ($s_fullname) {
                 $query->where('name', 'like', '%' . $s_fullname . '%')
@@ -29,8 +26,6 @@ class RoleController extends Controller
             }
         })
             ->orderBy('created_at', 'desc')->paginate($s_limit);
-        // and then you can get query log
-        // dd(DB::getQueryLog());
         return view('page.admin.role.index', compact(
             // 'users',
             'roles',
@@ -62,7 +57,6 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
-        // dd($request->all());
         $validated = $request->validated();
         $role = Role::create([
             'code' => $request->code,
@@ -72,11 +66,9 @@ class RoleController extends Controller
 
         ]);
         if ($request->has('permission')) {
-            // dd($request->permission);
             foreach ($request->permission as $key => $value) {
                 $role->permissions()->attach($value);
             }
-            // dd('ok');
         }
         return redirect()->route('role.index')->with('success', 'Thêm mới thành công');
     }
@@ -103,11 +95,6 @@ class RoleController extends Controller
         //
         $role = Role::find($id);
         $permission_active = $role->permissions;
-        // foreach ($permission_active as $key => $value) {
-        //     # code...
-        //     dump($value);
-        // }
-        // dd('ok');
         $parents = Permission::distinct()->select('parent', 'parent_name')->get();
         $permissions = Permission::all();
         // dd($permission);
@@ -126,35 +113,26 @@ class RoleController extends Controller
         //
         $validated = $request->validated();
         $role = Role::find($id);
-        // dd($role);
         $permisson_old = $role->permissions;
-        // dd($permisson_old);
-        // dd($permisson_old->count());
         if ($permisson_old->count() > 0) {
             $role->permissions()->detach();
         }
-        // dd($permisson_old);
         $role->update([
             'code' => $request->code,
             'name' => $request->name,
             'updated_at' => 1,
             'description' => $request->description,
-
         ]);
         if ($request->has('permission')) {
-            // dd($request->permission);
             foreach ($request->permission as $key => $value) {
                 $role->permissions()->attach($value);
             }
-            // dd('ok');
         }
         return redirect()->route('role.index')->with('success', 'Cập nhật thành công');
     }
-
     public function destroyRole($id)
     {
         $role = Role::find($id);
-        // $us$role->users;
         $countUser = $role->users->count();
         if ($countUser > 0) {
             return response()->json([
@@ -162,8 +140,6 @@ class RoleController extends Controller
                 'message' => 'Không thể xóa Role'
             ], 200);
         }
-        // dd($countUser);
-        // dd('not ok');
         $permisson_old = $role->permissions;
         if ($permisson_old->count() > 0) {
             $role->permissions()->detach();

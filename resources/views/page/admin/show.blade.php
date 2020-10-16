@@ -8,5 +8,4 @@ show per
 </div>
 @endsection
 @section('js-custom')
-
 @stop

@@ -83,13 +83,10 @@
                                                     $('#parentButtonUp{{ $parent->parent }}').hide();
                                                     $('#parentButtonDown{{ $parent->parent }}').show();
                                                 });
-
                                             </script>
                                         </span>
                                         <input type="checkbox" name="" value="" id="pa{{ $parent->parent }}"
-                                        @foreach ($permission_active as $per_active)
-                                            {{ $per_active->parent == $parent->parent ? 'checked' : '' }}
-                                        @endforeach
+                                        {{ $permission_active->contains('parent',$parent->parent) ? 'checked' : '' }}
                                         />
                                         <label for="pa{{ $parent->parent }}">
                                             {{ $parent->parent_name }}
@@ -103,9 +100,7 @@
                                                         <li class="">
                                                             <input type="checkbox" id="per{{ $permission->id }}"
                                                                 name="permission[]" value="{{ $permission->id }}"
-                                                                    @foreach ($permission_active as $per_active)
-                                                                            {{ $per_active->id == $permission->id ? 'checked' : '' }}
-                                                                    @endforeach
+                                                                {{ $permission_active->contains($permission->id) ? 'checked' : ''}}
                                                             >
                                                         <label for="per{{ $permission->id }}">
                                                             {{ $permission->description }}
