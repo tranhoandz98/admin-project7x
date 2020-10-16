@@ -33,14 +33,6 @@
                 </a>
             </li>
             @endcan
-            <li class="menu">
-                <a href="{{ route('showPer') }}" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <i data-feather="server"></i>
-                        <span>Show</span>
-                    </div>
-                </a>
-            </li>
         </ul>
 
     </nav>

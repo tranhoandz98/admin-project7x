@@ -22,11 +22,8 @@
                     </div>
                 @endif
                 <div class="">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-3">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-3 mt-3">
                         <h4>USER LIST</h4>
-                        {{-- {{ $s_limit }}
-                        {{ $s_fullname }} --}}
-                        {{ $s_type_user }}
                     </div>
                 </div>
             </div>
@@ -66,7 +63,7 @@
                             <div class="form-group">
                                 <label for=""></label>
                                 <input type="date" class="form-control" name="created_at" id="display-name"
-                                    aria-describedby="helpId" placeholder="Full name" value=" {{ $s_created_at }}">
+                            aria-describedby="helpId" placeholder="Full name" value="{{$s_created_at}}">
                             </div>
                         </div>
                         <div class="mt-3 pr-3 pt-1">

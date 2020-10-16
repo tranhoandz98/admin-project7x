@@ -35,6 +35,7 @@ class UserController extends Controller
         $s_type_user  = $request->type_user;
         $s_created_at = $request->created_at;
         $roles = Role::all();
+        // dd($s_created_at);
         // DB::enableQueryLog();
         $users = User::where(function ($query) use ($s_fullname) {
             if ($s_fullname) {

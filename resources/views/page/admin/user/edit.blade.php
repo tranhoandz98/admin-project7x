@@ -6,7 +6,7 @@
         <div class="statbox widget box box-shadow">
             <div class="widget-header">
                 <div class="">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-3">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-3 mt-3">
                         <h4>UPDATE USER</h4>
                     </div>
                 </div>

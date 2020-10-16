@@ -27,7 +27,6 @@
     <!--  BEGIN CUSTOM STYLE FILE  -->
     <link rel="stylesheet" type="text/css" href="{{ url('public') }}/assets/css/elements/alert.css">
     <!--  END CUSTOM STYLE FILE  -->
-    <link rel="stylesheet" type="text/css" href="{{ url('public') }}/plugins/jstree/style.min.css">
     <link href="{{ url('public') }}/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <link href="{{ url('public') }}/plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
     <link href="{{ url('public') }}/assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css" />
@@ -36,7 +35,7 @@
     <link href="{{ url('public') }}/assets/css/font.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ url('public') }}/assets/css/forms/theme-checkbox-radio.css">
     <link href="{{ url('public') }}/assets/css/components/tabs-accordian/custom-accordions.css" rel="stylesheet"
-        type="text/css" />
+    type="text/css" />
     @yield('css-custom')
     <link href="{{ url('public') }}/assets/css/style.css" rel="stylesheet" type="text/css" />
     <script src="{{ url('public') }}/assets/js/libs/jquery-3.1.1.min.js"></script>
@@ -118,7 +117,6 @@
         feather.replace();
 
     </script>
-    <script src="{{ url('public') }}/plugins/jstree/jstree.min.js"></script>
     <script src="{{ url('public') }}/assets/js/components/ui-accordions.js"></script>
     <script src="{{ url('public') }}/plugins/jquery-validate/jquery.validate.js"></script>
     <script src="{{ url('public') }}/plugins/sweetalerts/sweetalert2.min.js"></script>

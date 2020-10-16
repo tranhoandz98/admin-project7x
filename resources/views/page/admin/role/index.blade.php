@@ -22,7 +22,7 @@
                     </div>
                 @endif
                 <div class="">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-3">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-3 mt-3">
                         <h4>ROLE MANAGER</h4>
                     </div>
                 </div>
@@ -188,6 +188,5 @@
                 })
             });
         });
-
     </script>
 @endsection

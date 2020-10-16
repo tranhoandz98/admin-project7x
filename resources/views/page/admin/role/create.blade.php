@@ -2,13 +2,14 @@
 @section('title', 'Thêm mới role')
 @section('title-nav', 'Creat Role')
 @section('css-custom')
+    <link rel="stylesheet" type="text/css" href="{{ url('public') }}/plugins/tree-select/style.css">
 @endsection
 @section('main')
     <div id="tableHover" class="col-lg-12 col-12 layout-spacing pt-5">
         <div class="statbox widget box box-shadow">
             <div class="widget-header">
                 <div class="">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-3">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-3 mt-3">
                         <h4>CREATE ROLE</h4>
                     </div>
                 </div>
@@ -52,58 +53,25 @@
                     <div class="row">
                         <div class="col">
                             <label for="code" class="text-dark">Permission</label>
-                            <div id="withoutSpacing" class="">
-                            </div>
                             <div class="controls mb-2">
-                                {{-- <button class="btn btn-primary" type="button">Collepsed</button>
-                                <button class="btn btn-warning" type="button">Expanded</button> --}}
                                 <button class="btn btn-success" type="button">Checked All</button>
                                 <button class="btn btn-danger" type="button">Unchek All</button>
                             </div>
-                            <ul class="tree">
+                            <ul data-role="treeview">
                                 @foreach ($parents as $parent)
-                                    <li class="has collapsed">
-                                        <span id="heading{{ $parent->parent }}" data-toggle="collapse"
-                                            data-target="#withoutSpacingAccordion{{ $parent->parent }}"
-                                            aria-expanded="false"
-                                            aria-controls="withoutSpacingAccordion{{ $parent->parent }}">
-                                            <span id="parentButtonDown{{ $parent->parent }}"><i
-                                                    data-feather="chevron-down"></i>
-                                            </span>
-                                            <span id="parentButtonUp{{ $parent->parent }}"><i data-feather="chevron-up"></i>
-                                            </span>
-                                            <script>
-                                                $('#parentButtonUp{{ $parent->parent }}').hide();
-                                                $('#parentButtonDown{{ $parent->parent }}').click(function(e) {
-                                                    $('#parentButtonUp{{ $parent->parent }}').show();
-                                                    $('#parentButtonDown{{ $parent->parent }}').hide();
-                                                });
-                                                $('#parentButtonUp{{ $parent->parent }}').click(function(e) {
-                                                    $('#parentButtonUp{{ $parent->parent }}').hide();
-                                                    $('#parentButtonDown{{ $parent->parent }}').show();
-                                                });
-
-                                            </script>
-                                        </span>
-                                        <input type="checkbox" name="" value="" id="pa{{ $parent->parent }}" />
-                                        <label for="pa{{ $parent->parent }}">
-                                            {{ $parent->parent_name }}
-                                        </label>
-                                        <ul>
+                                    <li>
+                                        <span class="caret"></span>
+                                    <input type="checkbox" data-role="checkbox" data-caption="{{$parent->parent_name}}" title="">
+                                        <ul class="nested ">
                                             @foreach ($permissions as $permission)
-                                            <div id="withoutSpacingAccordion{{ $parent->parent }}" class="collapse"
-                                                aria-labelledby="heading{{ $parent->parent }}" data-parent="#withoutSpacing"
-                                                >
                                                 @if ($permission->parent == $parent->parent)
-                                                    <li class="">
-                                                        <input type="checkbox" id="per{{ $permission->id }}" name="permission[]"
-                                                            value="{{ $permission->id }}" />
-                                                        <label for="per{{ $permission->id }}">
-                                                            {{ $permission->description }}
-                                                        </label>
+                                                    <li>
+                                                        <input
+                                                            type="checkbox" data-role="checkbox"
+                                                            data-caption="{{ $permission->description }}" title=""
+                                                            name="permission[]" value="{{$permission->id}}">
                                                     </li>
                                                 @endif
-                                            </div>
                                             @endforeach
                                         </ul>
                                     </li>
@@ -126,6 +94,7 @@
     </div>
 @endsection
 @section('js-custom')
-
-</script>
+<script src="{{ url('public') }}/plugins/tree-select/tree.js"></script>
+<script src="{{ url('public') }}/plugins/treeview/custom-jstree.js"></script>
+<script src="{{ url('public') }}/plugins/tree-select/metro.min.js"></script>
 @endsection
