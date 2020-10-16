@@ -54,7 +54,7 @@
                             <li><a href="{{ $url .'&limit=' . $limit}}">{{ $page }}</a></li>
                         @elseif ($page == $paginator->lastPage() - 1)
                             {{-- <li><a>...</a></li> --}}
-                            <li class="disabled"><span><i class="fa fa-ellipsis-h"></i></span></li>
+                            <li class="disabled"><a><span><i class="">...</i></span></a></li>
                         @endif
                     @endforeach
                 @endif

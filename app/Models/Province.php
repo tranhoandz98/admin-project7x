@@ -9,6 +9,7 @@ class Province extends Model
 {
     //
     protected $table = 'cs_category_province';
+    protected $guarded=[];
 
     public function users(){
        return $this->hasMany(User::class);
