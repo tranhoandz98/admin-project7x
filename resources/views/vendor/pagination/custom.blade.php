@@ -1,4 +1,11 @@
 @if ($paginator->hasPages())
+    @php
+    $str = '';
+    foreach ($arr as $key => $value) {
+    $str = $str . '&' . $key . '=' . $value ;
+    // dd($str);
+    }
+    @endphp
     <!-- Pagination -->
     <div class="pull-right paginating-container pagination-solid justify-content-end">
         <ul class="pagination">
@@ -10,7 +17,7 @@
                 </li>
             @else
                 <li>
-                    <a href="{{ $paginator->url(1) . '&limit=' . $limit }}">
+                    <a href="{{ $paginator->url(1) . $str }}">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -23,8 +30,9 @@
                 </span>
                 </a>
                 </li>
+
                 <li>
-                    <a href="{{ $paginator->previousPageUrl() . '&limit=' . $limit }}">
+                    <a href="{{ $paginator->previousPageUrl() . $str }}">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -41,17 +49,14 @@
             @foreach ($elements as $element)
                 {{-- Array Of Links --}}
                 @if (is_array($element))
-                    {{-- <li class=""><a href="">1</a></li>
-                    --}}
-                    {{-- <li><a>...</a></li> --}}
                     @foreach ($element as $page => $url)
-                        @if ($page == $paginator->currentPage() )
+                        @if ($page == $paginator->currentPage())
                             <li class="active"><span>
                                     <a href="">{{ $page }}</a>
                                 </span></li>
                         @elseif (($page == $paginator->currentPage() + 1|| $page == $paginator->currentPage() + 2 )
                             || $page == $paginator->lastPage())
-                            <li><a href="{{ $url .'&limit=' . $limit}}">{{ $page }}</a></li>
+                            <li><a href="{{ $url . $str }}">{{ $page }}</a></li>
                         @elseif ($page == $paginator->lastPage() - 1)
                             {{-- <li><a>...</a></li> --}}
                             <li class="disabled"><a><span><i class="">...</i></span></a></li>
@@ -63,7 +68,7 @@
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
                 <li>
-                    <a href="{{ $paginator->nextPageUrl() . '&limit=' . $limit }}">
+                    <a href="{{ $paginator->nextPageUrl() . $str }}">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -74,21 +79,16 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ $paginator->url($lastpage) . '&limit=' . $limit }}">
+                    <a href="{{ $paginator->url($lastpage) . $str }}">
                         <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-chevrons-right">
+                                <polyline points="13 17 18 12 13 7"></polyline>
+                                <polyline points="6 17 11 12 6 7"></polyline>
+                            </svg>
                         </span>
                     </a>
-                </li>
-            @else
-                <li class="disabled">
-                    <span>
-                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg> --}}
-                    </span>
                 </li>
             @endif
         </ul>

@@ -64,7 +64,7 @@
                             <div class="form-group">
                                 <label for=""></label>
                                 <input type="date" class="form-control" name="created_at" id="display-name"
-                            aria-describedby="helpId" placeholder="Full name" value="{{$s_created_at}}">
+                                    aria-describedby="helpId" placeholder="Full name" value="{{ $s_created_at }}">
                             </div>
                         </div>
                         <div class="mt-3 pr-3 pt-1">
@@ -77,18 +77,18 @@
                                 </svg>
                                 Search</button>
                         </div>
-                        @can('create',App\User::class)
-                        <div class="mt-3 pt-1">
-                            <a href="{{ route('user.create') }}" class="btn-rounded btn-lg btn-success btn ">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-plus">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                                <span>Add</span>
-                            </a>
-                        </div>
+                        @can('create', App\User::class)
+                            <div class="mt-3 pt-1">
+                                <a href="{{ route('user.create') }}" class="btn-rounded btn-lg btn-success btn ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    <span>Add</span>
+                                </a>
+                            </div>
                         @endcan
                     </div>
                     <div class="table-responsive">
@@ -117,68 +117,68 @@
                                                 {{ $item->name }}
                                             @endforeach
                                         </td>
-                                        <td class="text-center">{!! $user->type_user == 1 ? '<span
-                                                class="badge outline-badge-success">Admin</span>' : '<span
-                                                class="badge outline-badge-danger">Portal</span>' !!}
+                                        <td class="text-center">{!! $user->type_user == 1
+                                            ? '<span class="badge outline-badge-success">Admin</span>'
+                                            : '<span class="badge outline-badge-danger">Portal</span>' !!}
                                         </td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at }}</td>
-                                        <td class="text-center">{!! $user->status == 1 ? '<span
-                                                class="badge outline-badge-success">Active</span>' : '<span
-                                                class="badge outline-badge-danger">Block</span>' !!}
+                                        <td class="text-center">{!! $user->status == 1
+                                            ? '<span class="badge outline-badge-success">Active</span>'
+                                            : '<span class="badge outline-badge-danger">Block</span>' !!}
                                         </td>
                                         <td class="text-center">
                                             {{-- edit --}}
                                             @can('update', App\User::class)
-                                            <a href="{{ route('user.edit', ['user' => $user->id]) }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-edit-3 text-primary">
-                                                    <path d="M12 20h9"></path>
-                                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z">
-                                                    </path>
-                                                </svg>
-                                            </a>
-                                            {{-- block or unblock
-                                            --}}
-                                            @if ($user->status == 1)
-                                                <a href="javascript:void(0)" data-id="{{ $user->id }}" class="lockUser">
+                                                <a href="{{ route('user.edit', ['user' => $user->id]) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="feather feather-lock text-danger hover">
-                                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-edit-3 text-primary">
+                                                        <path d="M12 20h9"></path>
+                                                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z">
+                                                        </path>
                                                     </svg>
                                                 </a>
-                                            @else
-                                                <a href="javascript:void(0)" data-id="{{ $user->id }}" class="unlockUser">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="feather feather-unlock text-danger">
-                                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
-                                                    </svg>
-                                                </a>
-                                            @endif
+                                                {{-- block or unblock
+                                                --}}
+                                                @if ($user->status == 1)
+                                                    <a href="javascript:void(0)" data-id="{{ $user->id }}" class="lockUser">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="feather feather-lock text-danger hover">
+                                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                                        </svg>
+                                                    </a>
+                                                @else
+                                                    <a href="javascript:void(0)" data-id="{{ $user->id }}" class="unlockUser">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="feather feather-unlock text-danger">
+                                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                                            <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                                                        </svg>
+                                                    </a>
+                                                @endif
                                             @endcan
                                             @can('delete', App\User::class)
-                                            {{-- delete --}}
-                                            <a data-id="{{ $user->id }}" class="deleteUser" href="javascript:void(0)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-trash-2 text-danger">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path
-                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                                    </path>
-                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                </svg>
-                                            </a>
+                                                {{-- delete --}}
+                                                <a data-id="{{ $user->id }}" class="deleteUser" href="javascript:void(0)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-trash-2 text-danger">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path
+                                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                                        </path>
+                                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                    </svg>
+                                                </a>
                                             @endcan
                                         </td>
                                     </tr>
@@ -200,7 +200,16 @@
                                 </select> /Total {{ $users->total() }} record</label>
                         </div>
                         <div class="col-md-6">
-                            {{ $users->links('vendor.pagination.custom', ['limit' => $s_limit, 'lastpage' => $users->lastPage()]) }}
+                            {{ $users->links('vendor.pagination.custom', [
+                                    'arr' => [
+                                        'limit' => $s_limit,
+                                        's_fullname' => $s_fullname,
+                                        's_role_user' => $s_role_user,
+                                        's_type_user' => $s_type_user,
+                                        's_created_at' => $s_created_at,
+                                    ],
+                                    'lastpage' => $users->lastPage(),
+                                ]) }}
                         </div>
                     </div>
                     {{-- End pagination --}}
@@ -233,7 +242,7 @@
                                     'User has been lock.',
                                     'success'
                                 )
-                                $('body').click(function (e) {
+                                $('body').click(function(e) {
                                     window.location.reload(1);
                                 });
                             }
@@ -262,7 +271,7 @@
                                     'User has been Unlock.',
                                     'success'
                                 )
-                                $('body').click(function (e) {
+                                $('body').click(function(e) {
                                     window.location.reload(1);
                                 });
                             }
@@ -312,5 +321,6 @@
                 })
             });
         });
+
     </script>
 @endsection

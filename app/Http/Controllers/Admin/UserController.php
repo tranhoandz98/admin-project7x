@@ -79,7 +79,7 @@ class UserController extends Controller
     {
         //
         $roles = Role::all();
-        $provinces = Province::where('isvalid',0)->where('isdeleted',0)->get();
+        $provinces = Province::where('isvalid',0)->get();
         return view('page.admin.user.create', compact('roles', 'provinces'));
     }
 
@@ -122,8 +122,8 @@ class UserController extends Controller
         $roles = Role::all();
         $user = User::findOrFail($id);
         $districts = District::where('province_id', $user->province_id)
-        ->where('isvalid',0)->where('isdeleted',0)->get();
-        $provinces = Province::where('isvalid',0)->where('isdeleted',0)->get();
+        ->where('isvalid',0)->get();
+        $provinces = Province::where('isvalid',0)->get();
         return view('page.admin.user.edit', compact('user', 'roles', 'provinces', 'districts'));
     }
 
@@ -180,7 +180,7 @@ class UserController extends Controller
     public function getDistricts($id)
     {
         $districts = District::where('province_id', $id)
-        ->where('isvalid',0)->where('isdeleted',0)->get();
+        ->where('isvalid',0)->get();
         return response()->json($districts);
     }
     public function destroyUser($id)

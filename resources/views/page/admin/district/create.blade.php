@@ -64,16 +64,17 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                              <label for="province_id">Province</label>
-                              <select class="form-control" name="province_id" id="province_id">
-                                  <option value="">-- Province --</option>
-                                  @foreach ($provinces as $item)
-                                  <option value="{{ $item->code }}">{{ $item->fullname }}</option>
-                                  @endforeach
-                              </select>
-                              @error('province_id')
-                              <span class="text-red">{{ $message }}</span>
-                              @enderror
+                                <label for="province_id">Province</label>
+                                <select class="form-control" name="province_id" id="province_id">
+                                    <option value="">-- Province --</option>
+                                    @foreach ($provinces as $item)
+                                        <option value="{{ $item->code }}"
+                                            >{{ $item->fullname }}</option>
+                                    @endforeach
+                                </select>
+                                @error('province_id')
+                                <span class="text-red">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>

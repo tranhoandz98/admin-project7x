@@ -18,6 +18,8 @@ class DistrictController extends Controller
      */
     public function index(Request $request)
     {
+        $provinces = Province::where('isvalid', 0)->get();
+        $province_id = $request->province_id;
         $s_limit      = $request->limit ?? 10;
         $s_fullname   = $request->display_name;
         $districts = District::where(function ($query) use ($s_fullname) {
@@ -25,15 +27,19 @@ class DistrictController extends Controller
                 $query->where('fullname', 'like', '%' . $s_fullname . '%')
                     ->orWhere('code', 'like', '%' . $s_fullname . '%');
             }
-
-        })->where('isdeleted',0)
+        })->where(function ($query) use ($province_id) {
+            if ($province_id) {
+                $query->where('province_id', $province_id);
+            }
+        })
             ->orderBy('created_at', 'desc')
             ->paginate($s_limit);
-
         return view('page.admin.district.index', compact(
             'districts',
             's_limit',
             's_fullname',
+            'provinces',
+            'province_id',
         ));
     }
 
@@ -44,8 +50,8 @@ class DistrictController extends Controller
      */
     public function create()
     {
-        $provinces = Province::where('isvalid',0)->where('isdeleted',0)->get();
-        return view('page.admin.district.create',compact('provinces'));
+        $provinces = Province::where('isvalid', 0)->get();
+        return view('page.admin.district.create', compact('provinces'));
     }
 
     /**
@@ -57,7 +63,7 @@ class DistrictController extends Controller
     public function store(DistrictRequest $request)
     {
         $date = new DateTime('');
-        $provinces = Province::create([
+        $district = District::create([
             'code' => $request->code,
             'fullname' => $request->fullname,
             'short_name' => $request->short_name,
@@ -90,8 +96,8 @@ class DistrictController extends Controller
     {
         //
         $district = District::findOrFail($id);
-        $provinces = Province::where('isvalid',0)->where('isdeleted',0)->get();
-        return view('page.admin.district.edit', compact('provinces','district'));
+        $provinces = Province::where('isvalid', 0)->get();
+        return view('page.admin.district.edit', compact('provinces', 'district'));
     }
 
     /**
@@ -104,12 +110,12 @@ class DistrictController extends Controller
     public function update(DistrictRequest $request, $id)
     {
         //
-        $province = Province::findorFail($id);
-        $province->update([
+        $district = District::findorFail($id);
+        $district->update([
             'code' => $request->code,
             'fullname' => $request->fullname,
             'short_name' => $request->short_name,
-            'updated_by' => $province->updated_by + 1,
+            'updated_by' => $district->updated_by + 1,
             'isvalid' => (int)$request->status,
             'province_id' => $request->province_id,
         ]);
@@ -130,7 +136,7 @@ class DistrictController extends Controller
     {
         $date = new DateTime('');
         $district = District::find($id);
-        if ($district){
+        if ($district) {
             $district->delete();
             return response()->json([
                 'status' => '1',

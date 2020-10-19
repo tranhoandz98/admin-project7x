@@ -25,8 +25,7 @@ class ProvinceController extends Controller
                     ->orWhere('code', 'like', '%' . $s_fullname . '%');
             }
 
-        })->where('isdeleted',0)
-            ->orderBy('created_at', 'desc')->paginate($s_limit);
+        })->orderBy('created_at', 'desc')->paginate($s_limit);
         return view('page.admin.province.index', compact(
             // 'users',
             'provinces',
