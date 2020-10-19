@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('title','Trang chủ')
+@section('title-nav', 'Dashboard')
 @section('css-custom')
 <link href="{{ url('public') }}/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
 <link href="{{ url('public') }}/assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />

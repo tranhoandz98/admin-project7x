@@ -1,7 +1,7 @@
 @extends('layouts.master')
-@section('title', 'Quản Lý Role')
-@section('title-nav', 'System')
-@section('title-nav-child', 'Role')
+@section('title', 'Quản Lý District')
+@section('title-nav', 'Category')
+@section('title-nav-child', 'District')
 @section('main')
     <div id="tableHover" class="col-lg-12 col-12 layout-spacing pt-5">
         <div class="statbox widget box box-shadow">
@@ -24,18 +24,18 @@
                 @endif
                 <div class="">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-3 mt-3">
-                        <h4>ROLE MANAGER</h4>
+                        <h4>DISTRICT MANAGER</h4>
                     </div>
                 </div>
             </div>
             <div class="widget-content widget-content-area">
-                <form action="{{ route('role.index') }}" method="get">
+                <form action="{{ route('district.index') }}" method="get">
                     <div class="row">
                         <div class="col-5">
                             <div class="form-group">
                                 <label for=""></label>
                                 <input type="text" class="form-control" name="display_name" id="display-name"
-                                    aria-describedby="helpId" placeholder="Role name or role code" @if ($s_fullname)
+                                    aria-describedby="helpId" placeholder="Name or code" @if ($s_fullname)
                                 value="{{ $s_fullname }}"
                                 @endif
                                 >
@@ -51,9 +51,9 @@
                                 </svg>
                                 Search</button>
                         </div>
-                        @can('create', App\Models\Role::class)
+                        @can('create', App\Models\District::class)
                         <div class="mt-3 pt-1">
-                            <a href="{{ route('role.create') }}" class="btn-rounded btn-lg btn-success btn ">
+                            <a href="{{ route('district.create') }}" class="btn-rounded btn-lg btn-success btn ">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-plus">
@@ -71,24 +71,29 @@
                                 <tr class="text-center">
                                     <th>No.</th>
                                     <th>Role Code</th>
-                                    <th>Display Name</th>
-                                    <th>Description</th>
+                                    <th>Full Name</th>
+                                    <th>Province</th>
                                     <th>Created At</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($roles as $role)
-                                    <tr id="link{{ $role->id }}">
+                                @foreach ($districts as $district)
+                                    <tr id="link{{ $district->id }}">
                                         <td class="text-center">{{ $loop->index + 1 }}</td>
-                                        <td>{{ $role->code }}</td>
-                                        <td>{{ $role->name }}</td>
-                                        <td>{{ $role->description }}</td>
-                                        <td class="text-center">{{ $role->created_at }}</td>
+                                        <td>{{ $district->code }}</td>
+                                        <td>{{ $district->fullname }}</td>
+                                        <td>{{ $district->provinces->fullname ?? ''}}</td>
+                                        <td class="text-center">{{ $district->created_at }}</td>
+                                        <td class="text-center">{!! $district->isvalid == 0 ? '<span
+                                            class="badge outline-badge-success">Hiệu lực</span>' : '<span
+                                            class="badge outline-badge-danger">Hết hiệu lực</span>' !!}
+                                        </td>
                                         <td class="text-center">
                                             {{-- edit --}}
-                                            @can('update', App\Models\Role::class)
-                                            <a href="{{ route('role.edit', $role->id) }}">
+                                            @can('update', App\Models\District::class)
+                                            <a href="{{ route('district.edit', $district->id) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                     stroke-linecap="round" stroke-linejoin="round"
@@ -100,8 +105,8 @@
                                             </a>
                                             @endcan
                                             {{-- delete --}}
-                                            @can('delete', App\Models\Role::class)
-                                            <a data-id="{{ $role->id }}" class="deleteRole" href="javascript:void(0)">
+                                            @can('delete', App\Models\District::class)
+                                            <a data-id="{{ $district->id }}" class="deleteDistrict" href="javascript:void(0)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                     stroke-linecap="round" stroke-linejoin="round"
@@ -127,15 +132,15 @@
                             <label class="text-dark"><span>Display</span>
                                 <select name="limit" id="limitPage" aria-controls="example"
                                     class="btn bg-light border-dark">
-                                    <option value="1" {{ $s_limit == 1 ? 'selected' : '' }}>1</option>
                                     <option value="5" {{ $s_limit == 5 ? 'selected' : '' }}>5</option>
                                     <option value="10" {{ $s_limit == 10 ? 'selected' : '' }}>10</option>
                                     <option value="20" {{ $s_limit == 20 ? 'selected' : '' }}>20</option>
                                     <option value="50" {{ $s_limit == 50 ? 'selected' : '' }}>50</option>
-                                </select> /Total {{ $roles->total() }} record</label>
+                                    <option value="100" {{ $s_limit == 100 ? 'selected' : '' }}>100</option>
+                                </select> /Total {{ $districts->total() }} record</label>
                         </div>
                         <div class="col-md-6">
-                            {{ $roles->links('vendor.pagination.custom', ['limit' => $s_limit, 'lastpage' => $roles->lastPage()]) }}
+                            {{ $districts->links('vendor.pagination.custom', ['limit' => $s_limit, 'lastpage' => $districts->lastPage()]) }}
                         </div>
                     </div>
                     {{-- End pagination --}}
@@ -148,10 +153,9 @@
 @section('js-custom')
     <script>
         $(document).ready(function() {
-            $('.deleteRole').click(function() {
-                let idRole = $(this).data("id");
-                let url = "{{ url('/admin/role/destroyRole') }}/" + idRole;
-                // console.log(url);
+            $('.deleteDistrict').click(function() {
+                let idDistrict = $(this).data("id");
+                let url = "{{ url('/admin/district/destroyDistrict') }}/" + idDistrict;
                 swal({
                     title: 'Are you sure?',
                     type: 'warning',
@@ -159,15 +163,12 @@
                     confirmButtonText: 'Delete',
                     padding: '2em'
                 }).then(function(result) {
-                    // console.log(id);
-                    console.log(url);
                     if (result.value) {
                         $.ajax({
                             type: "GET",
                             url: url,
                             success: function(data) {
-                                console.log('success:', data);
-                                if (data.status == 1) {
+                                if (data.status == 2) {
                                     swal(
                                         'Cancelled!',
                                         data.message,

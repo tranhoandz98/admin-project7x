@@ -31,11 +31,15 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => 'check
     Route::get('user/destroyUser/{id}','UserController@destroyUser')->name('user.destroyUser');
     Route::resource('user', 'UserController');
     // role
-    // Route::get('role/getPermission','RoleController@getPermission');
-    Route::get('role/destroyRole/{id}','RoleController@destroyRole')->name('role.destroyRole');
+    Route::get('role/destroyRole/{id}','RoleController@destroyRole');
     Route::resource('role', 'RoleController');
     Route::get('showPermission','HomeController@showPer')->name('showPer');
-
+    // province
+    Route::get('province/destroyProvince/{id}','ProvinceController@destroyProvince');
+    Route::resource('province', 'ProvinceController');
+    // district
+    Route::get('district/destroyDistrict/{id}','DistrictController@destroyDistrict');
+    Route::resource('district', 'DistrictController');
 });
 Route::get('/admin/login', 'Admin\HomeController@login')->name('login');
 Route::post('/admin/login', 'Admin\HomeController@postLogin');

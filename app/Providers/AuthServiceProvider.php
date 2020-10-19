@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Permission;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -15,8 +14,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
-        'App\Models\Role' => 'App\Policies\RolePolicy',
-        'App\User' => 'App\Policies\UserPolicy'
+        'App\User'            => 'App\Policies\UserPolicy',
+        'App\Models\Role'     => 'App\Policies\RolePolicy',
+        'App\Models\Province' => 'App\Policies\ProvincePolicy',
+        'App\Models\District' => 'App\Policies\DistrictPolicy',
     ];
 
     /**
@@ -27,5 +28,11 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        Gate::define('show-system', function ($user) {
+            return $user->hasPermission('show-user') && $user->hasPermission('show-role');
+        });
+        Gate::define('show-category', function ($user) {
+            return $user->hasPermission('show-district') && $user->hasPermission('show-province');
+        });
     }
 }

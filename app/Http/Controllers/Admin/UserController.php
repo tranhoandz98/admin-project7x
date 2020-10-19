@@ -79,7 +79,7 @@ class UserController extends Controller
     {
         //
         $roles = Role::all();
-        $provinces = Province::all();
+        $provinces = Province::where('isvalid',0)->where('isdeleted',0)->get();
         return view('page.admin.user.create', compact('roles', 'provinces'));
     }
 
@@ -120,9 +120,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $roles = Role::all();
-        $user = User::find($id);
-        $districts = District::where('province_id', $user->province_id)->get();
-        $provinces = Province::all();
+        $user = User::findOrFail($id);
+        $districts = District::where('province_id', $user->province_id)
+        ->where('isvalid',0)->where('isdeleted',0)->get();
+        $provinces = Province::where('isvalid',0)->where('isdeleted',0)->get();
         return view('page.admin.user.edit', compact('user', 'roles', 'provinces', 'districts'));
     }
 
@@ -137,7 +138,7 @@ class UserController extends Controller
     {
         $request->validated();
         $role = Role::findOrFail($request->role_id);
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         // delete user role old
         $role_old = $user->roles;
             $user->roles()->detach();
@@ -161,7 +162,7 @@ class UserController extends Controller
 
     public function changeStatus($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         if ($user->status == 1) {
             $user->update([
                 'status' => 2
@@ -179,12 +180,13 @@ class UserController extends Controller
     public function getDistricts($id)
     {
         $districts = District::where('province_id', $id)
-            ->get();
+        ->where('isvalid',0)->where('isdeleted',0)->get();
         return response()->json($districts);
     }
     public function destroyUser($id)
     {
         $user = User::find($id);
+        // dd($user);
         if ($user) {
             $role_old = $user->roles;
             // dd('ok');

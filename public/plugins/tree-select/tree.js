@@ -2,6 +2,7 @@
 $(document).on('click', 'button', function(e) {
     switch ($(this).text()) {
       case 'Checked All':
+        $(".treeview input[type='checkbox']").attr('data-indeterminate', false);
         $(".treeview input[type='checkbox']").prop('checked', true);
         break;
       case 'Unchek All':

@@ -120,7 +120,7 @@ class RoleController extends Controller
         $role->update([
             'code' => $request->code,
             'name' => $request->name,
-            'updated_at' => 1,
+            'updated_by' => $role->updated_by + 1,
             'description' => $request->description,
         ]);
         if ($request->has('permission')) {

@@ -16,7 +16,7 @@ class District extends Model
       return  $this->hasMany(User::class);
     }
     public function provinces(){
-       return $this->belongsTo(Province::class,'district_id','code');
+       return $this->belongsTo(Province::class,'province_id','code');
     }
 
 }

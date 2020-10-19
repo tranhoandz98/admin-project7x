@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Thêm mới role')
-@section('title-nav', 'Creat Role')
+@section('title-nav', 'System')
+@section('title-nav-child', 'Creat Role')
 @section('css-custom')
     <link rel="stylesheet" type="text/css" href="{{ url('public') }}/plugins/tree-select/style.css">
 @endsection

@@ -122,14 +122,16 @@
         <ul class="navbar-nav flex-row">
             <li>
                 <div class="page-header">
-
                     <nav class="breadcrumb-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><span>@yield('title-nav')</span>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">@yield('title-nav')</a></li>
+                                @if (View::hasSection('title-nav-child'))
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        <span>@yield('title-nav-child')</span>
+                                @endif
                             </li>
                         </ol>
-                    </nav>
+                     </nav>
 
                 </div>
             </li>

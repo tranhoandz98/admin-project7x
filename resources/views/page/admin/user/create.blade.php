@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Thêm mới user')
-@section('title-nav', 'Creat User')
+@section('title-nav', 'System')
+@section('title-nav-child', 'Creat User')
 @section('main')
     <div id="tableHover" class="col-lg-12 col-12 layout-spacing pt-5">
         <div class="statbox widget box box-shadow">
