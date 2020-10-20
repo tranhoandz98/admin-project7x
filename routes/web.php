@@ -42,4 +42,4 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin', 'middleware' => 'check
     Route::resource('district', 'DistrictController');
 });
 Route::get('/admin/login', 'Admin\HomeController@login')->name('login');
-Route::post('/admin/login', 'Admin\HomeController@postLogin');
+Route::post('/admin/postLogin', 'Admin\HomeController@postLogin');

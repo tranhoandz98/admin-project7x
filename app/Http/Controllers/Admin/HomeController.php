@@ -23,9 +23,15 @@ class HomeController extends Controller
     {
         // dd($request->all());
         if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
-            return redirect()->route('admin');
+            return response()->json([
+                'status' => 2,
+                'message' => 'Đăng nhập thành công'
+            ]);
         } else {
-            return redirect()->back()->with('errors', 'Tài khoản hoặc mật khẩu không chính xác');
+            return response()->json([
+                'status' => 1,
+                'message' => 'Tài khoản hoặc mật khẩu không chính xác'
+            ]);
         }
     }
     public function logout()

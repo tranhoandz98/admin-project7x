@@ -74,7 +74,7 @@
                                     <th>Full Name</th>
                                     <th>Created At</th>
                                     <th>Status</th>
-                                    @canany(['update','delete', App\Models\Province::class])
+                                    @canany(['update','delete'], App\Models\Province::class)
                                     <th>Action</th>
                                     @endcanany
                                 </tr>
@@ -86,11 +86,11 @@
                                         <td>{{ $province->code }}</td>
                                         <td>{{ $province->fullname }}</td>
                                         <td class="text-center">{{ $province->created_at }}</td>
-                                        <td class="text-center">{!! $province->isvalid == 0 ? '<span
-                                                class="badge outline-badge-success">Hiệu lực</span>' : '<span
-                                                class="badge outline-badge-danger">Hết hiệu lực</span>' !!}
+                                        <td class="text-center">{!! $province->isvalid == 0
+                                            ? '<span class="badge outline-badge-success">Hiệu lực</span>'
+                                            : '<span class="badge outline-badge-danger">Hết hiệu lực</span>' !!}
                                         </td>
-                                        @canany(['update','delete', App\Models\Province::class])
+                                        @canany(['update','delete'], App\Models\Province::class)
                                         <td class="text-center">
                                             {{-- edit --}}
                                             @can('update', App\Models\Province::class)
@@ -153,7 +153,6 @@
                     </div>
                     {{-- End pagination --}}
                 </form>
-
             </div>
         </div>
     </div>
@@ -164,7 +163,6 @@
             $('.deleteProvince').click(function() {
                 let idProvince = $(this).data("id");
                 let url = "{{ url('/admin/province/destroyProvince') }}/" + idProvince;
-                // console.log(url);
                 swal({
                     title: 'Are you sure?',
                     type: 'warning',
@@ -172,8 +170,6 @@
                     confirmButtonText: 'Delete',
                     padding: '2em'
                 }).then(function(result) {
-                    // console.log(id);
-                    console.log(url);
                     if (result.value) {
                         $.ajax({
                             type: "GET",
