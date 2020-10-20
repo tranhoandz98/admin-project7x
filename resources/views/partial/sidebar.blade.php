@@ -59,17 +59,16 @@
                         </div>
                     </a>
                     <ul class="submenu list-unstyled collapse" id="system" data-parent="#accordionExample" style="">
-                        {{-- @can('viewAny', App\User::class) --}}
+                        @can('viewAny', App\User::class)
                         <li>
                             <a href="{{ route('user.index') }}"> User </a>
                         </li>
-                        {{-- @endcan --}}
-                        {{-- @can('viewAny', App\Models\Role::class)
-                        --}}
+                        @endcan
+                        @can('viewAny', App\Models\Role::class)
                         <li>
                             <a href="{{ route('role.index') }}"> Role </a>
                         </li>
-                        {{-- @endcan --}}
+                        @endcan
                     </ul>
                 </li>
             @endcan

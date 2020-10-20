@@ -74,7 +74,10 @@
                                     <th>Display Name</th>
                                     <th>Description</th>
                                     <th>Created At</th>
+                                    @canany(['update', 'delete'],
+                                    App\Models\Role::class)
                                     <th>Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,6 +88,8 @@
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->description }}</td>
                                         <td class="text-center">{{ $role->created_at }}</td>
+                                        @canany(['update', 'delete'],
+                                        App\Models\Role::class)
                                         <td class="text-center">
                                             {{-- edit --}}
                                             @can('update', App\Models\Role::class)
@@ -116,6 +121,7 @@
                                                 </a>
                                             @endcan
                                         </td>
+                                        @endcanany
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -146,7 +152,6 @@
                     </div>
                     {{-- End pagination --}}
                 </form>
-
             </div>
         </div>
     </div>
@@ -157,7 +162,6 @@
             $('.deleteRole').click(function() {
                 let idRole = $(this).data("id");
                 let url = "{{ url('/admin/role/destroyRole') }}/" + idRole;
-                // console.log(url);
                 swal({
                     title: 'Are you sure?',
                     type: 'warning',
@@ -165,8 +169,6 @@
                     confirmButtonText: 'Delete',
                     padding: '2em'
                 }).then(function(result) {
-                    // console.log(id);
-                    console.log(url);
                     if (result.value) {
                         $.ajax({
                             type: "GET",
@@ -195,6 +197,5 @@
                 })
             });
         });
-
     </script>
 @endsection

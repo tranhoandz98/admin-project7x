@@ -55,7 +55,8 @@
                                     <option value="">--Role--</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}" {{ $s_role_user == $role->id ? 'selected' : '' }}>
-                                            {{ $role->name }}</option>
+                                            {{ $role->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -103,7 +104,9 @@
                                     <th>Email</th>
                                     <th>Created At</th>
                                     <th class="text-center">Status</th>
+                                    @canany(['update', 'delete'], App\User::class)
                                     <th>Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -117,16 +120,17 @@
                                                 {{ $item->name }}
                                             @endforeach
                                         </td>
-                                        <td class="text-center">{!! $user->type_user == 1
-                                            ? '<span class="badge outline-badge-success">Admin</span>'
-                                            : '<span class="badge outline-badge-danger">Portal</span>' !!}
+                                        <td class="text-center">{!! $user->type_user == 1 ? '<span
+                                                class="badge outline-badge-success">Admin</span>' : '<span
+                                                class="badge outline-badge-danger">Portal</span>' !!}
                                         </td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at }}</td>
-                                        <td class="text-center">{!! $user->status == 1
-                                            ? '<span class="badge outline-badge-success">Active</span>'
-                                            : '<span class="badge outline-badge-danger">Block</span>' !!}
+                                        <td class="text-center">{!! $user->status == 1 ? '<span
+                                                class="badge outline-badge-success">Active</span>' : '<span
+                                                class="badge outline-badge-danger">Block</span>' !!}
                                         </td>
+                                        @canany(['update', 'delete'], App\User::class)
                                         <td class="text-center">
                                             {{-- edit --}}
                                             @can('update', App\User::class)
@@ -181,6 +185,7 @@
                                                 </a>
                                             @endcan
                                         </td>
+                                        @endcanany
                                     </tr>
                                 @endforeach
                             </tbody>

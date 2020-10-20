@@ -29,10 +29,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::define('show-system', function ($user) {
-            return $user->hasPermission('show-user') && $user->hasPermission('show-role');
+            return $user->hasPermission('show-user') || $user->hasPermission('show-role');
         });
         Gate::define('show-category', function ($user) {
-            return $user->hasPermission('show-district') && $user->hasPermission('show-province');
+            return $user->hasPermission('show-district') || $user->hasPermission('show-province');
         });
     }
 }
